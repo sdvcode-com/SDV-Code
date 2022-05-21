@@ -26,9 +26,9 @@ namespace SdvCode.Models.WebsiteActions
         public WebsiteActionStatus ActionStatus { get; set; }
 
         [Required]
-        [ForeignKey(nameof(Models.User.User))]
-        public string UserId { get; set; }
+        [ForeignKey(nameof(User))]
+        public string OwnerId { get; set; }
 
-        public User User { get; set; }
+        public User Owner { get; set; }
     }
 }

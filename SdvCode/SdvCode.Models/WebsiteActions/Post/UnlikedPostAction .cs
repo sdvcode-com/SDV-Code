@@ -18,7 +18,7 @@ namespace SdvCode.Models.WebsiteActions.Post
         }
 
         [Required]
-        [ForeignKey(nameof(User))]
+        [ForeignKey(nameof(Owner))]
         public string UnlikerId { get; set; }
 
         public User Unliker { get; set; }

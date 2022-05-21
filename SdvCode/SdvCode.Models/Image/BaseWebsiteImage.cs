@@ -11,9 +11,9 @@ namespace SdvCode.Models.Image
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
-    public abstract class BaseImage : BaseData
+    public abstract class BaseWebsiteImage : BaseData
     {
-        protected BaseImage()
+        protected BaseWebsiteImage()
         {
         }
 

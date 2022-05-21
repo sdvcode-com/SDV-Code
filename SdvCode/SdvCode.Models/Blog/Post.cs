@@ -5,6 +5,9 @@
 namespace SdvCode.Models.Blog
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    using Microsoft.Extensions.Hosting;
 
     using SdvCode.Models.Image.Post;
     using SdvCode.Models.WebsiteActions.Post;
@@ -15,20 +18,32 @@ namespace SdvCode.Models.Blog
         {
         }
 
+        public virtual ICollection<BasePostImage> PostImages { get; set; } = new HashSet<BasePostImage>();
+
+        [NotMapped]
         public virtual ICollection<PostCoverImage> CoverImages { get; set; } = new HashSet<PostCoverImage>();
 
-        public virtual ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
+        [NotMapped]
+        public virtual ICollection<PostImage> Images { get; set; } = new HashSet<PostImage>();
 
+        public virtual ICollection<BasePostAction> PostActions { get; set; } = new HashSet<BasePostAction>();
+
+        [NotMapped]
         public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
 
-        public virtual ICollection<LikeOwnPostAction> LikeOwnPostAction { get; set; } = new HashSet<LikeOwnPostAction>();
+        [NotMapped]
+        public virtual ICollection<LikeOwnPostAction> LikeOwnPostActions { get; set; } = new HashSet<LikeOwnPostAction>();
 
-        public virtual ICollection<LikePostAction> LikePostAction { get; set; } = new HashSet<LikePostAction>();
+        [NotMapped]
+        public virtual ICollection<LikePostAction> LikePostActions { get; set; } = new HashSet<LikePostAction>();
 
+        [NotMapped]
         public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
 
+        [NotMapped]
         public virtual ICollection<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; } = new HashSet<UnlikeOwnPostAction>();
 
+        [NotMapped]
         public virtual ICollection<UnlikePostAction> UnlikePostActions { get; set; } = new HashSet<UnlikePostAction>();
     }
 }

@@ -28,6 +28,10 @@ namespace SdvCode.Data
 
         public DbSet<BaseData> BaseData { get; set; }
 
+        public DbSet<LikedPostAction> LikedPostActions { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -43,7 +47,7 @@ namespace SdvCode.Data
 
             builder.Entity<BaseWebsiteAction>().ToTable("BaseWebsiteActions");
             builder.Entity<BasePostAction>().ToTable("BasePostActions");
-            builder.Entity<BaseImage>().ToTable("BaseImages");
+            builder.Entity<BaseWebsiteImage>().ToTable("BaseWebsiteImages");
             builder.Entity<BasePostImage>().ToTable("BasePostImages");
 
             builder.Entity<City>().ToTable("Cities");

@@ -18,7 +18,7 @@ namespace SdvCode.Models.WebsiteActions.Post
         }
 
         [Required]
-        [ForeignKey(nameof(User))]
+        [ForeignKey(nameof(Owner))]
         public string LikerId { get; set; }
 
         public User Liker { get; set; }

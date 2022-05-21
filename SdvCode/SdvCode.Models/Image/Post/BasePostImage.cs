@@ -14,7 +14,7 @@ namespace SdvCode.Models.Image.Post
 
     using SdvCode.Models.Blog;
 
-    public abstract class BasePostImage : BaseImage
+    public abstract class BasePostImage : BaseWebsiteImage
     {
         protected BasePostImage()
         {
