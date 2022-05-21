@@ -10,8 +10,10 @@ namespace SdvCode.Models.User
     using Microsoft.AspNetCore.Identity;
 
     using SdvCode.Constraints;
+    using SdvCode.Models.Image.Post;
     using SdvCode.Models.UserInformation;
     using SdvCode.Models.WebsiteActions;
+    using SdvCode.Models.WebsiteActions.Post;
 
     public class User : IdentityUser
     {
@@ -89,10 +91,20 @@ namespace SdvCode.Models.User
 
         public virtual ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
 
-        public virtual ICollection<BaseWebsiteAction> Actions { get; set; } = new HashSet<BaseWebsiteAction>();
+        public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
 
-        // public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
+        public virtual ICollection<LikeOwnPostAction> LikeOwnPostAction { get; set; } = new HashSet<LikeOwnPostAction>();
 
-        // public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
+        public virtual ICollection<LikePostAction> LikePostAction { get; set; } = new HashSet<LikePostAction>();
+
+        public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
+
+        public virtual ICollection<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; } = new HashSet<UnlikeOwnPostAction>();
+
+        public virtual ICollection<UnlikePostAction> UnlikePostActions { get; set; } = new HashSet<UnlikePostAction>();
+
+        public virtual ICollection<PostCoverImage> PostCoverImages { get; set; } = new HashSet<PostCoverImage>();
+
+        public virtual ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
     }
 }

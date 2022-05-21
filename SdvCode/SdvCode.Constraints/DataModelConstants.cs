@@ -36,6 +36,8 @@ namespace SdvCode.Constraints
 
         public const int ImageSystemNameMaxLength = 120;
 
-        public const int ImageTypeMaxLength = 10;
+        public const int ImageExtensionMaxLength = 10;
+
+        public const int ImageCloudinaryPathMaxLength = 200;
     }
 }
