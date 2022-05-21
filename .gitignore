@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/SdvCode/SdvCode/appsettings.json
+/Resources
+/SdvCode-v1/SdvCode/appsettings.json
+/SdvCode/SdvCode.Web/appsettings.json
