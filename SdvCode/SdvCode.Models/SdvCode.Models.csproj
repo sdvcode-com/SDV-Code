@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SdvCode.Constraints\SdvCode.Constraints.csproj" />
     <ProjectReference Include="..\SdvCode.ExtensionMethods\SdvCode.ExtensionMethods.csproj" />
-    <ProjectReference Include="..\SdvCode.ExtensionMethod\SdvCode.ExtensionMethods.csproj" />
   </ItemGroup>
 
   <ItemGroup>
