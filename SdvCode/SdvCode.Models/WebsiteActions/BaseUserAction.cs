@@ -1,18 +1,23 @@
-﻿// <copyright file="BaseWebsiteAction.cs" company="SDV Code Data Models">
+﻿// <copyright file="BaseUserAction.cs" company="SDV Code Data Models">
 // Copyright (c) SDV Code Data Models. All rights reserved.
 // </copyright>
 
 namespace SdvCode.Models.WebsiteActions
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
 
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
-    public abstract class BaseWebsiteAction : BaseData
+    public abstract class BaseUserAction : BaseData
     {
-        protected BaseWebsiteAction()
+        protected BaseUserAction()
         {
             this.ActionStatus = WebsiteActionStatus.Unread;
         }

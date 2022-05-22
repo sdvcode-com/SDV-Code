@@ -16,6 +16,7 @@ namespace SdvCode.Models.User
     using SdvCode.Models.UserInformation;
     using SdvCode.Models.WebsiteActions;
     using SdvCode.Models.WebsiteActions.Post;
+    using SdvCode.Models.WebsiteActions.User;
 
     public class User : IdentityUser
     {
@@ -122,5 +123,19 @@ namespace SdvCode.Models.User
         public virtual ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
 
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+
+        public virtual ICollection<BaseUserAction> UserActions { get; set; } = new HashSet<BaseUserAction>();
+
+        public virtual ICollection<FollowUserAction> FollowUserActions { get; set; } = new HashSet<FollowUserAction>();
+
+        public virtual ICollection<FollowedUserAction> FollowedUserActions { get; set; } = new HashSet<FollowedUserAction>();
+
+        public virtual ICollection<UnfollowUserAction> UnfollowUserActions { get; set; } = new HashSet<UnfollowUserAction>();
+
+        public virtual ICollection<UnfollowedUserAction> UnfollowedUserActions { get; set; } = new HashSet<UnfollowedUserAction>();
+
+        public virtual ICollection<FollowUnfollow> Followers { get; set; } = new HashSet<FollowUnfollow>();
+
+        public virtual ICollection<FollowUnfollow> Followees { get; set; } = new HashSet<FollowUnfollow>();
     }
 }

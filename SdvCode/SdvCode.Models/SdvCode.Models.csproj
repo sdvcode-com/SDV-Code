@@ -30,7 +30,6 @@
   <ItemGroup>
     <Folder Include="WebsiteActions\Blog\" />
     <Folder Include="WebsiteActions\Profile\" />
-    <Folder Include="WebsiteActions\User\" />
   </ItemGroup>
 
 </Project>

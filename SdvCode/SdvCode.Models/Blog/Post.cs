@@ -5,10 +5,7 @@
 namespace SdvCode.Models.Blog
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
-    using Microsoft.Extensions.Hosting;
 
     using SdvCode.Models.Image.Post;
     using SdvCode.Models.User;

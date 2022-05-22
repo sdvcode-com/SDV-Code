@@ -4,15 +4,6 @@
 
 namespace SdvCode.Models.Image.Post
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
     public class PostCoverImage : BasePostImage

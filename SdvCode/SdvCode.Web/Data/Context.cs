@@ -16,6 +16,7 @@ namespace SdvCode.Data
     using SdvCode.Models.UserInformation;
     using SdvCode.Models.WebsiteActions;
     using SdvCode.Models.WebsiteActions.Post;
+    using SdvCode.Models.WebsiteActions.User;
 
     public class Context : IdentityDbContext<User, Role, string,
         IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
@@ -56,6 +57,16 @@ namespace SdvCode.Data
 
         public DbSet<PostImage> PostImages { get; set; }
 
+        public DbSet<FollowUserAction> FollowUserActions { get; set; }
+
+        public DbSet<FollowedUserAction> FollowedUserActions { get; set; }
+
+        public DbSet<UnfollowUserAction> UnfollowUserActions { get; set; }
+
+        public DbSet<UnfollowedUserAction> UnfollowedUserActions { get; set; }
+
+        public DbSet<FollowUnfollow> FollowUnfollows { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -73,6 +84,7 @@ namespace SdvCode.Data
             builder.Entity<BasePostAction>().ToTable("BasePostActions");
             builder.Entity<BaseWebsiteImage>().ToTable("BaseWebsiteImages");
             builder.Entity<BasePostImage>().ToTable("BasePostImages");
+            builder.Entity<BaseUserAction>().ToTable("BaseUserActions");
 
             builder.Entity<City>().ToTable("Cities");
             builder.Entity<Country>().ToTable("Countries");
@@ -90,6 +102,12 @@ namespace SdvCode.Data
 
             builder.Entity<PostCoverImage>().ToTable("PostCoverImages");
             builder.Entity<PostImage>().ToTable("PostImages");
+
+            builder.Entity<FollowUnfollow>().ToTable("FollowUnfollows");
+            builder.Entity<FollowUserAction>().ToTable("FollowUserActions");
+            builder.Entity<FollowedUserAction>().ToTable("FollowedUserActions");
+            builder.Entity<UnfollowUserAction>().ToTable("UnfollowUserActions");
+            builder.Entity<UnfollowedUserAction>().ToTable("UnfollowedUserActions");
 
             builder.Entity<City>(entity =>
             {
@@ -151,6 +169,18 @@ namespace SdvCode.Data
                     .HasForeignKey(x => x.CountryId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
+
+                entity.HasMany(x => x.Followers)
+                    .WithOne(x => x.Followed)
+                    .HasForeignKey(x => x.FollowedId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                entity.HasMany(x => x.Followees)
+                    .WithOne(x => x.Follower)
+                    .HasForeignKey(x => x.FollowerId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
             });
 
             builder.Entity<Role>(b =>
@@ -159,6 +189,11 @@ namespace SdvCode.Data
                     .WithOne(e => e.Role)
                     .HasForeignKey(ur => ur.RoleId)
                     .IsRequired();
+            });
+
+            builder.Entity<FollowUnfollow>(entity =>
+            {
+                entity.HasKey(x => new { x.FollowedId, x.FollowerId });
             });
         }
     }

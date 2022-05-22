@@ -6,7 +6,6 @@ namespace SdvCode.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using SdvCode.Constraints;
     using SdvCode.ExtensionMethods;
