@@ -29,7 +29,12 @@ namespace SdvCode.Data
 
         public DbSet<BaseData> BaseData { get; set; }
 
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
+
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+
+        public DbSet<BlogTag> BlogTags { get; set; }
+        public DbSet<BlogPostTag> BlogPostsTags { get; set; }
 
         public DbSet<City> Cities { get; set; }
 
@@ -92,7 +97,10 @@ namespace SdvCode.Data
             builder.Entity<ZipCode>().ToTable("ZipCodes");
             builder.Entity<State>().ToTable("States");
 
-            builder.Entity<Post>().ToTable("Posts");
+            builder.Entity<BlogPost>().ToTable("BlogPosts");
+            builder.Entity<BlogCategory>().ToTable("BlogCategories");
+            builder.Entity<BlogTag>().ToTable("BlogTags");
+            builder.Entity<BlogPostTag>().ToTable("BlogPostsTags");
             builder.Entity<LikeOwnPostAction>().ToTable("LikeOwnPostActions");
             builder.Entity<LikedPostAction>().ToTable("LikedPostActions");
             builder.Entity<LikePostAction>().ToTable("LikePostActions");
@@ -181,6 +189,18 @@ namespace SdvCode.Data
                     .HasForeignKey(x => x.FollowerId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
+
+                entity.HasMany(x => x.BlogCategories)
+                    .WithOne(x => x.Owner)
+                    .HasForeignKey(x => x.OwnerId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
+
+                entity.HasMany(x => x.BlogTags)
+                    .WithOne(x => x.Owner)
+                    .HasForeignKey(x => x.OwnerId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
             });
 
             builder.Entity<Role>(b =>
@@ -194,6 +214,35 @@ namespace SdvCode.Data
             builder.Entity<FollowUnfollow>(entity =>
             {
                 entity.HasKey(x => new { x.FollowedId, x.FollowerId });
+            });
+
+            builder.Entity<BlogPost>(entity =>
+            {
+                entity.HasOne(x => x.BlogCategory)
+                    .WithMany(x => x.BlogPosts)
+                    .HasForeignKey(x => x.BlogCategoryId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
+
+                entity.HasMany(x => x.BlogPostsTags)
+                    .WithOne(x => x.BlogPost)
+                    .HasForeignKey(x => x.BlogPostId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+            });
+
+            builder.Entity<BlogTag>(entity =>
+            {
+                entity.HasMany(x => x.BlogPostsTags)
+                    .WithOne(x => x.BlogTag)
+                    .HasForeignKey(x => x.BlogTagId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+            });
+
+            builder.Entity<BlogPostTag>(entity =>
+            {
+                entity.HasKey(x => new { x.BlogPostId, x.BlogTagId });
             });
         }
     }

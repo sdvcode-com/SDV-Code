@@ -11,9 +11,9 @@ namespace SdvCode.Models.Blog
     using SdvCode.Models.User;
     using SdvCode.Models.WebsiteActions.Post;
 
-    public class Post : BaseData
+    public class BlogPost : BaseData
     {
-        public Post()
+        public BlogPost()
         {
         }
 
@@ -22,7 +22,14 @@ namespace SdvCode.Models.Blog
 
         public User Author { get; set; }
 
+        [ForeignKey(nameof(Blog.BlogCategory))]
+        public string? BlogCategoryId { get; set; }
+
+        public BlogCategory BlogCategory { get; set; }
+
         public virtual ICollection<BasePostImage> PostImages { get; set; } = new HashSet<BasePostImage>();
+
+        public virtual ICollection<BlogPostTag> BlogPostsTags { get; set; } = new HashSet<BlogPostTag>();
 
         [NotMapped]
         public virtual ICollection<PostCoverImage> CoverImages { get; set; } = new HashSet<PostCoverImage>();

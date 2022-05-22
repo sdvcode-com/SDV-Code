@@ -122,7 +122,7 @@ namespace SdvCode.Models.User
         [NotMapped]
         public virtual ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
 
-        public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        public virtual ICollection<BlogPost> Posts { get; set; } = new HashSet<BlogPost>();
 
         public virtual ICollection<BaseUserAction> UserActions { get; set; } = new HashSet<BaseUserAction>();
 
@@ -137,5 +137,9 @@ namespace SdvCode.Models.User
         public virtual ICollection<FollowUnfollow> Followers { get; set; } = new HashSet<FollowUnfollow>();
 
         public virtual ICollection<FollowUnfollow> Followees { get; set; } = new HashSet<FollowUnfollow>();
+
+        public virtual ICollection<BlogCategory> BlogCategories { get; set; } = new HashSet<BlogCategory>();
+
+        public virtual ICollection<BlogTag> BlogTags { get; set; } = new HashSet<BlogTag>();
     }
 }

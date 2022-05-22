@@ -19,6 +19,6 @@ namespace SdvCode.Models.WebsiteActions.Post
         [ForeignKey(nameof(Post))]
         public string PostId { get; set; }
 
-        public Post Post { get; set; }
+        public BlogPost Post { get; set; }
     }
 }

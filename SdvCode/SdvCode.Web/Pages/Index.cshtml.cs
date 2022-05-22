@@ -29,7 +29,7 @@ namespace SdvCode.Pages
                 Id = "603d7154-5d3c-45ba-b2f9-f108941fd55f",
                 AccessFailedCount = 0,
             });
-            this.db.Posts.Add(new Models.Blog.Post
+            this.db.BlogPosts.Add(new Models.Blog.BlogPost
             {
                 Id = "6218d619-d461-40b1-83dc-ed69e3ee49db",
             });
