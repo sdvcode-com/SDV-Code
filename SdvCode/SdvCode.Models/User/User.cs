@@ -10,6 +10,7 @@ namespace SdvCode.Models.User
     using Microsoft.AspNetCore.Identity;
 
     using SdvCode.Constraints;
+    using SdvCode.Models.Blog;
     using SdvCode.Models.Image;
     using SdvCode.Models.Image.Post;
     using SdvCode.Models.UserInformation;
@@ -119,5 +120,7 @@ namespace SdvCode.Models.User
 
         [NotMapped]
         public virtual ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
+
+        public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }

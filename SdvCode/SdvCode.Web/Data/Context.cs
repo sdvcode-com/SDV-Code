@@ -28,9 +28,33 @@ namespace SdvCode.Data
 
         public DbSet<BaseData> BaseData { get; set; }
 
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<CountryCode> CountryCodes { get; set; }
+
+        public DbSet<ZipCode> ZipCodes { get; set; }
+
+        public DbSet<State> States { get; set; }
+
+        public DbSet<LikeOwnPostAction> LikeOwnPostActions { get; set; }
+
         public DbSet<LikedPostAction> LikedPostActions { get; set; }
 
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<LikePostAction> LikePostActions { get; set; }
+
+        public DbSet<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; }
+
+        public DbSet<UnlikedPostAction> UnlikedPostActions { get; set; }
+
+        public DbSet<UnlikePostAction> UnlikePostActions { get; set; }
+
+        public DbSet<PostCoverImage> PostCoverImages { get; set; }
+
+        public DbSet<PostImage> PostImages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -113,6 +137,18 @@ namespace SdvCode.Data
                 entity.HasOne(x => x.State)
                     .WithMany(x => x.ApplicationUsers)
                     .HasForeignKey(x => x.StateId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
+
+                entity.HasOne(x => x.City)
+                    .WithMany(x => x.ApplicationUsers)
+                    .HasForeignKey(x => x.CityId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
+
+                entity.HasOne(x => x.Country)
+                    .WithMany(x => x.ApplicationUsers)
+                    .HasForeignKey(x => x.CountryId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
             });

@@ -6,8 +6,10 @@ namespace SdvCode.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using SdvCode.Constraints;
+    using SdvCode.ExtensionMethods;
 
     public abstract class BaseData
     {
@@ -15,7 +17,7 @@ namespace SdvCode.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
-            this.SystemMessage = $"This record was created on ${this.CreatedOn.ToLocalTime():dd-MMMM-yyyy HH:mm:ss}";
+            this.SystemMessage = $"This record of type \"{this.GetType().Name.SplitCamelCase()}\" was created on {this.CreatedOn.ToLocalTime():dd-MMMM-yyyy HH:mm:ss}";
             this.IsDeleted = false;
         }
 

@@ -5,13 +5,15 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Web", "SdvCode.Web\SdvCode.Web.csproj", "{7D83C2F7-1574-4BC7-B440-04C06443802A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.Services", "SdvCode.Services\SdvCode.Services.csproj", "{FC6771A0-D061-46BC-9AEA-AB6B34BF7820}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Services", "SdvCode.Services\SdvCode.Services.csproj", "{FC6771A0-D061-46BC-9AEA-AB6B34BF7820}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.Models", "SdvCode.Models\SdvCode.Models.csproj", "{0174CEDF-6ECF-45CF-A0A5-36117D3B6E0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Models", "SdvCode.Models\SdvCode.Models.csproj", "{0174CEDF-6ECF-45CF-A0A5-36117D3B6E0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.ViewModels", "SdvCode.ViewModels\SdvCode.ViewModels.csproj", "{C4AD7B1D-1C06-456E-9A6A-2E9839C83B33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.ViewModels", "SdvCode.ViewModels\SdvCode.ViewModels.csproj", "{C4AD7B1D-1C06-456E-9A6A-2E9839C83B33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.Constraints", "SdvCode.Constraints\SdvCode.Constraints.csproj", "{22CB202D-5254-48C8-B58B-14E0BF0CF496}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Constraints", "SdvCode.Constraints\SdvCode.Constraints.csproj", "{22CB202D-5254-48C8-B58B-14E0BF0CF496}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.ExtensionMethods", "SdvCode.ExtensionMethods\SdvCode.ExtensionMethods.csproj", "{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{22CB202D-5254-48C8-B58B-14E0BF0CF496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22CB202D-5254-48C8-B58B-14E0BF0CF496}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22CB202D-5254-48C8-B58B-14E0BF0CF496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

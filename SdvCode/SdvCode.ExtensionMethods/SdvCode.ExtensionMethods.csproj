@@ -15,23 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SdvCode.Constraints\SdvCode.Constraints.csproj" />
-    <ProjectReference Include="..\SdvCode.ExtensionMethods\SdvCode.ExtensionMethods.csproj" />
-    <ProjectReference Include="..\SdvCode.ExtensionMethod\SdvCode.ExtensionMethods.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="WebsiteActions\Blog\" />
-    <Folder Include="WebsiteActions\Profile\" />
-    <Folder Include="WebsiteActions\User\" />
   </ItemGroup>
 
 </Project>

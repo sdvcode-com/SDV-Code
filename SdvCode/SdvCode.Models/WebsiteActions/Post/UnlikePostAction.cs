@@ -4,7 +4,11 @@
 
 namespace SdvCode.Models.WebsiteActions.Post
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
 
     public class UnlikePostAction : BasePostAction
     {
@@ -12,5 +16,11 @@ namespace SdvCode.Models.WebsiteActions.Post
         {
             this.ActionType = WebsiteActionType.UnlikePost;
         }
+
+        [Required]
+        [ForeignKey(nameof(User))]
+        public string UnlikeeId { get; set; }
+
+        public User Unlikee { get; set; }
     }
 }

@@ -5,11 +5,13 @@
 namespace SdvCode.Models.Blog
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.Extensions.Hosting;
 
     using SdvCode.Models.Image.Post;
+    using SdvCode.Models.User;
     using SdvCode.Models.WebsiteActions.Post;
 
     public class Post : BaseData
@@ -17,6 +19,11 @@ namespace SdvCode.Models.Blog
         public Post()
         {
         }
+
+        [ForeignKey(nameof(User))]
+        public string? AuthorId { get; set; }
+
+        public User Author { get; set; }
 
         public virtual ICollection<BasePostImage> PostImages { get; set; } = new HashSet<BasePostImage>();
 

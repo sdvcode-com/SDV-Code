@@ -4,7 +4,11 @@
 
 namespace SdvCode.Models.WebsiteActions.Post
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
 
     public class LikePostAction : BasePostAction
     {
@@ -12,5 +16,11 @@ namespace SdvCode.Models.WebsiteActions.Post
         {
             this.ActionType = WebsiteActionType.LikePost;
         }
+
+        [Required]
+        [ForeignKey(nameof(User))]
+        public string LikeeId { get; set; }
+
+        public User Likee { get; set; }
     }
 }
