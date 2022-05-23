@@ -4,12 +4,6 @@
 
 namespace SdvCode.Models.Image.User
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using SdvCode.Models.Enums;
 
     public class UserProfileImage : WebsiteImage
@@ -17,6 +11,8 @@ namespace SdvCode.Models.Image.User
         public UserProfileImage()
         {
             this.ImageType = WebsiteImageType.UserProfileImage;
+            this.CloudinaryPath = $"/Users/{this.OwnerId}_{this.Owner.UserName}/ProfileImages/";
+            this.SystemName = $"{this.Owner.UserName}_{this.Id}";
         }
     }
 }

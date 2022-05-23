@@ -7,6 +7,7 @@ namespace SdvCode.Models.Blog
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using SdvCode.Models.Image;
     using SdvCode.Models.User;
     using SdvCode.Models.WebsiteActions.Blog;
     using SdvCode.Models.WebsiteActions.Post;
@@ -46,5 +47,7 @@ namespace SdvCode.Models.Blog
         public virtual ICollection<CreatePostAction> CreatePostActions { get; set; } = new HashSet<CreatePostAction>();
 
         public virtual ICollection<CreatedPostAction> CreatedPostActions { get; set; } = new HashSet<CreatedPostAction>();
+
+        public virtual ICollection<WebsiteImage> WebsiteImages { get; set; } = new HashSet<WebsiteImage>();
     }
 }

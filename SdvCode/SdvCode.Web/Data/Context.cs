@@ -11,6 +11,7 @@ namespace SdvCode.Data
     using SdvCode.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Image;
+    using SdvCode.Models.Image.Post;
     using SdvCode.Models.Image.User;
     using SdvCode.Models.User;
     using SdvCode.Models.UserInformation;
@@ -69,6 +70,12 @@ namespace SdvCode.Data
 
         public DbSet<UserProfileImage> UserProfileImages { get; set; }
 
+        public DbSet<UserCoverImage> UserCoverImages { get; set; }
+
+        public DbSet<PostImage> PostImages { get; set; }
+
+        public DbSet<PostCoverImage> PostCoverImages { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -107,6 +114,10 @@ namespace SdvCode.Data
             builder.Entity<CreatedPostAction>().ToTable("CreatedPostActions");
 
             builder.Entity<UserProfileImage>().ToTable("UserProfileImages");
+            builder.Entity<UserCoverImage>().ToTable("UserCoverImages");
+
+            builder.Entity<PostImage>().ToTable("PostImages");
+            builder.Entity<PostCoverImage>().ToTable("PostCoverImages");
 
             builder.Entity<City>(entity =>
             {

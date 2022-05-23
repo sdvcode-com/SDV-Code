@@ -12,7 +12,6 @@ namespace SdvCode.Models.User
     using SdvCode.Constraints;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Image;
-    using SdvCode.Models.Image.User;
     using SdvCode.Models.UserInformation;
     using SdvCode.Models.WebsiteActions;
 
@@ -21,7 +20,13 @@ namespace SdvCode.Models.User
         public User()
         {
             this.IsBlocked = false;
+            this.RegisteredOn = DateTime.UtcNow;
         }
+
+        [Required]
+        public DateTime RegisteredOn { get; set; }
+
+        public DateTime? UpdatedOn { get; set; }
 
         [MaxLength(DataModelConstants.UserNamesMaxLength)]
         public string? FirstName { get; set; }
