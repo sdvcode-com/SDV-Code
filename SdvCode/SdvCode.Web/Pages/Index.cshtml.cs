@@ -5,10 +5,8 @@
 namespace SdvCode.Pages
 {
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Data;
-    using SdvCode.Models.User;
 
     public class IndexModel : PageModel
     {

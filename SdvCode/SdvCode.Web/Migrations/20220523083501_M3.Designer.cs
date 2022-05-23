@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
@@ -11,9 +12,10 @@ using SdvCode.Data;
 namespace SdvCode.Web.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220523083501_M3")]
+    partial class M3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,26 +113,6 @@ namespace SdvCode.Web.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("SdvCode.Models.Actions.UserAction", b =>
-                {
-                    b.Property<string>("ActionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ReceiverId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ActionId", "OwnerId", "ReceiverId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.ToTable("UsersActions", (string)null);
                 });
 
             modelBuilder.Entity("SdvCode.Models.BaseData", b =>
@@ -371,14 +353,23 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("UsersRoles", (string)null);
                 });
 
-            modelBuilder.Entity("SdvCode.Models.Actions.Action", b =>
+            modelBuilder.Entity("SdvCode.Models.Actions.UserAction", b =>
                 {
                     b.HasBaseType("SdvCode.Models.BaseData");
 
-                    b.Property<int>("ActionType")
-                        .HasColumnType("int");
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.ToTable("Actions", (string)null);
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.ToTable("UsersActions", (string)null);
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogCategory", b =>
@@ -535,13 +526,6 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("ZipCodes", (string)null);
                 });
 
-            modelBuilder.Entity("SdvCode.Models.Actions.MyFirstAction", b =>
-                {
-                    b.HasBaseType("SdvCode.Models.Actions.Action");
-
-                    b.ToTable("MyFirstActions", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("SdvCode.Models.User.Role", null)
@@ -576,33 +560,6 @@ namespace SdvCode.Web.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SdvCode.Models.Actions.UserAction", b =>
-                {
-                    b.HasOne("SdvCode.Models.Actions.Action", "Action")
-                        .WithMany("UsersActions")
-                        .HasForeignKey("ActionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.User.User", "Owner")
-                        .WithMany("UserActions")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.User.User", "Receiver")
-                        .WithMany("ReceivedActions")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Action");
-
-                    b.Navigation("Owner");
-
-                    b.Navigation("Receiver");
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogPostTag", b =>
@@ -681,13 +638,29 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.Actions.Action", b =>
+            modelBuilder.Entity("SdvCode.Models.Actions.UserAction", b =>
                 {
                     b.HasOne("SdvCode.Models.BaseData", null)
                         .WithOne()
-                        .HasForeignKey("SdvCode.Models.Actions.Action", "Id")
+                        .HasForeignKey("SdvCode.Models.Actions.UserAction", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.User", "Owner")
+                        .WithMany("UserActions")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.User", "Receiver")
+                        .WithMany("ReceivedActions")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Receiver");
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogCategory", b =>
@@ -859,15 +832,6 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.Actions.MyFirstAction", b =>
-                {
-                    b.HasOne("SdvCode.Models.Actions.Action", null)
-                        .WithOne()
-                        .HasForeignKey("SdvCode.Models.Actions.MyFirstAction", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SdvCode.Models.User.Role", b =>
                 {
                     b.Navigation("UsersRoles");
@@ -888,11 +852,6 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("UserActions");
 
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("SdvCode.Models.Actions.Action", b =>
-                {
-                    b.Navigation("UsersActions");
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogCategory", b =>

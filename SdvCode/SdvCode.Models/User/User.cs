@@ -10,6 +10,7 @@ namespace SdvCode.Models.User
     using Microsoft.AspNetCore.Identity;
 
     using SdvCode.Constraints;
+    using SdvCode.Models.Actions;
     using SdvCode.Models.Blog;
     using SdvCode.Models.UserInformation;
 
@@ -96,5 +97,9 @@ namespace SdvCode.Models.User
         public virtual ICollection<BlogTag> BlogTags { get; set; } = new HashSet<BlogTag>();
 
         public virtual ICollection<BlogComment> BlogComments { get; set; } = new HashSet<BlogComment>();
+
+        public virtual ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
+
+        public virtual ICollection<UserAction> ReceivedActions { get; set; } = new HashSet<UserAction>();
     }
 }

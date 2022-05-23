@@ -1,4 +1,4 @@
-﻿// <copyright file="DbContext.cs" company="SDV Code">
+﻿// <copyright file="Context.cs" company="SDV Code">
 // Copyright (c) SDV Code. All rights reserved.
 // </copyright>
 
@@ -9,6 +9,7 @@ namespace SdvCode.Data
     using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Models;
+    using SdvCode.Models.Actions;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Models.UserInformation;
@@ -44,6 +45,8 @@ namespace SdvCode.Data
 
         public DbSet<State> States { get; set; }
 
+        public DbSet<UserAction> UsersActions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -52,6 +55,8 @@ namespace SdvCode.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Action>().ToTable("Actions");
 
             builder.Entity<User>().ToTable("Users");
             builder.Entity<Role>().ToTable("Roles");
@@ -68,6 +73,8 @@ namespace SdvCode.Data
             builder.Entity<BlogTag>().ToTable("BlogTags");
             builder.Entity<BlogPostTag>().ToTable("BlogPostsTags");
             builder.Entity<BlogComment>().ToTable("BlogComments");
+
+            builder.Entity<UserAction>().ToTable("UsersActions");
 
             builder.Entity<City>(entity =>
             {
@@ -147,6 +154,28 @@ namespace SdvCode.Data
                     .HasForeignKey(x => x.OwnerId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
+            });
+
+            builder.Entity<UserAction>(b =>
+            {
+                b.HasOne(e => e.Owner)
+                    .WithMany(e => e.UserActions)
+                    .HasForeignKey(ur => ur.OwnerId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                b.HasOne(e => e.Receiver)
+                    .WithMany(e => e.ReceivedActions)
+                    .HasForeignKey(ur => ur.ReceiverId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                b.HasKey(x => new
+                {
+                    x.ActionId,
+                    x.OwnerId,
+                    x.ReceiverId,
+                });
             });
 
             builder.Entity<Role>(b =>
