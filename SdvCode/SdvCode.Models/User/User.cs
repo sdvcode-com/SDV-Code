@@ -11,6 +11,8 @@ namespace SdvCode.Models.User
 
     using SdvCode.Constraints;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Image;
+    using SdvCode.Models.Image.User;
     using SdvCode.Models.UserInformation;
     using SdvCode.Models.WebsiteActions;
 
@@ -101,5 +103,7 @@ namespace SdvCode.Models.User
         public virtual ICollection<WebsiteAction> UserActions { get; set; } = new HashSet<WebsiteAction>();
 
         public virtual ICollection<WebsiteAction> ReceivedActions { get; set; } = new HashSet<WebsiteAction>();
+
+        public virtual ICollection<WebsiteImage> WebsiteImages { get; set; } = new HashSet<WebsiteImage>();
     }
 }

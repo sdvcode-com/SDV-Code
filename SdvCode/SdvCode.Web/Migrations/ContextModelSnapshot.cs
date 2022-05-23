@@ -415,6 +415,22 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("BlogTags", (string)null);
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Image.WebsiteImage", b =>
+                {
+                    b.HasBaseType("SdvCode.Models.BaseData");
+
+                    b.Property<int>("ImageType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("WebsiteImages", (string)null);
+                });
+
             modelBuilder.Entity("SdvCode.Models.UserInformation.City", b =>
                 {
                     b.HasBaseType("SdvCode.Models.BaseData");
@@ -528,6 +544,13 @@ namespace SdvCode.Web.Migrations
                     b.HasIndex("ReceiverId");
 
                     b.ToTable("WebsiteActions", (string)null);
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Image.User.UserProfileImage", b =>
+                {
+                    b.HasBaseType("SdvCode.Models.Image.WebsiteImage");
+
+                    b.ToTable("UserProfileImages", (string)null);
                 });
 
             modelBuilder.Entity("SdvCode.Models.WebsiteActions.Blog.CreatedPostAction", b =>
@@ -830,6 +853,23 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Image.WebsiteImage", b =>
+                {
+                    b.HasOne("SdvCode.Models.BaseData", null)
+                        .WithOne()
+                        .HasForeignKey("SdvCode.Models.Image.WebsiteImage", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.User", "Owner")
+                        .WithMany("WebsiteImages")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("SdvCode.Models.UserInformation.City", b =>
                 {
                     b.HasOne("SdvCode.Models.UserInformation.Country", "Country")
@@ -938,6 +978,15 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("Owner");
 
                     b.Navigation("Receiver");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Image.User.UserProfileImage", b =>
+                {
+                    b.HasOne("SdvCode.Models.Image.WebsiteImage", null)
+                        .WithOne()
+                        .HasForeignKey("SdvCode.Models.Image.User.UserProfileImage", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SdvCode.Models.WebsiteActions.Blog.CreatedPostAction", b =>
@@ -1096,6 +1145,8 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("UserActions");
 
                     b.Navigation("UserRoles");
+
+                    b.Navigation("WebsiteImages");
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogCategory", b =>
