@@ -33,6 +33,18 @@ namespace SdvCode.Models.Blog
 
         public virtual ICollection<LikePostAction> LikePostActions { get; set; } = new HashSet<LikePostAction>();
 
+        public virtual ICollection<UnlikePostAction> UnlikePostActions { get; set; } = new HashSet<UnlikePostAction>();
+
+        public virtual ICollection<LikeOwnPostAction> LikeOwnPostActions { get; set; } = new HashSet<LikeOwnPostAction>();
+
+        public virtual ICollection<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; } = new HashSet<UnlikeOwnPostAction>();
+
+        public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
+
+        public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
+
         public virtual ICollection<CreatePostAction> CreatePostActions { get; set; } = new HashSet<CreatePostAction>();
+
+        public virtual ICollection<CreatedPostAction> CreatedPostActions { get; set; } = new HashSet<CreatedPostAction>();
     }
 }

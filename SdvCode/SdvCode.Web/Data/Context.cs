@@ -51,7 +51,19 @@ namespace SdvCode.Data
 
         public DbSet<LikePostAction> LikePostActions { get; set; }
 
+        public DbSet<UnlikePostAction> UnlikePostActions { get; set; }
+
+        public DbSet<LikeOwnPostAction> LikeOwnPostActions { get; set; }
+
+        public DbSet<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; }
+
+        public DbSet<LikedPostAction> LikedPostActions { get; set; }
+
+        public DbSet<UnlikedPostAction> UnlikedPostActions { get; set; }
+
         public DbSet<CreatePostAction> CreatePostActions { get; set; }
+
+        public DbSet<CreatedPostAction> CreatedPostActions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -81,7 +93,13 @@ namespace SdvCode.Data
             builder.Entity<BlogComment>().ToTable("BlogComments");
 
             builder.Entity<LikePostAction>().ToTable("LikePostActions");
+            builder.Entity<UnlikePostAction>().ToTable("UnlikePostActions");
+            builder.Entity<LikeOwnPostAction>().ToTable("LikeOwnPostActions");
+            builder.Entity<UnlikeOwnPostAction>().ToTable("UnlikeOwnPostActions");
+            builder.Entity<LikedPostAction>().ToTable("LikedPostActions");
+            builder.Entity<UnlikedPostAction>().ToTable("UnlikedPostActions");
             builder.Entity<CreatePostAction>().ToTable("CreatePostActions");
+            builder.Entity<CreatedPostAction>().ToTable("CreatedPostActions");
 
             builder.Entity<City>(entity =>
             {

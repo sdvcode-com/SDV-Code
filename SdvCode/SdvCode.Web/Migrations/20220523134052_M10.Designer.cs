@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
@@ -11,9 +12,10 @@ using SdvCode.Data;
 namespace SdvCode.Web.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220523134052_M10")]
+    partial class M10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -595,45 +597,6 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("LikePostActions", (string)null);
                 });
 
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.UnlikedPostAction", b =>
-                {
-                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
-
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("UnlikedPostActions", (string)null);
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.UnlikeOwnPostAction", b =>
-                {
-                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
-
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("UnlikeOwnPostActions", (string)null);
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.UnlikePostAction", b =>
-                {
-                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
-
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("UnlikePostActions", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("SdvCode.Models.User.Role", null)
@@ -949,7 +912,7 @@ namespace SdvCode.Web.Migrations
                         .IsRequired();
 
                     b.HasOne("SdvCode.Models.Blog.BlogPost", "Post")
-                        .WithMany("CreatedPostActions")
+                        .WithMany()
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1025,57 +988,6 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.UnlikedPostAction", b =>
-                {
-                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
-                        .WithOne()
-                        .HasForeignKey("SdvCode.Models.WebsiteActions.Post.UnlikedPostAction", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.Blog.BlogPost", "Post")
-                        .WithMany("UnlikedPostActions")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.UnlikeOwnPostAction", b =>
-                {
-                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
-                        .WithOne()
-                        .HasForeignKey("SdvCode.Models.WebsiteActions.Post.UnlikeOwnPostAction", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.Blog.BlogPost", "Post")
-                        .WithMany("UnlikeOwnPostActions")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.UnlikePostAction", b =>
-                {
-                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
-                        .WithOne()
-                        .HasForeignKey("SdvCode.Models.WebsiteActions.Post.UnlikePostAction", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.Blog.BlogPost", "Post")
-                        .WithMany("UnlikePostActions")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
             modelBuilder.Entity("SdvCode.Models.User.Role", b =>
                 {
                     b.Navigation("UsersRoles");
@@ -1109,8 +1021,6 @@ namespace SdvCode.Web.Migrations
 
                     b.Navigation("CreatePostActions");
 
-                    b.Navigation("CreatedPostActions");
-
                     b.Navigation("LikeOwnPostActions");
 
                     b.Navigation("LikePostActions");
@@ -1118,12 +1028,6 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("LikedPostActions");
 
                     b.Navigation("PostsTags");
-
-                    b.Navigation("UnlikeOwnPostActions");
-
-                    b.Navigation("UnlikePostActions");
-
-                    b.Navigation("UnlikedPostActions");
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogTag", b =>
