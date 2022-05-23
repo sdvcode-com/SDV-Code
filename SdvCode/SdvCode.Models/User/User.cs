@@ -94,45 +94,7 @@ namespace SdvCode.Models.User
 
         public virtual ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
 
-        public virtual ICollection<BaseWebsiteAction> WebsiteActions { get; set; } = new HashSet<BaseWebsiteAction>();
-
-        [NotMapped]
-        public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<LikeOwnPostAction> LikeOwnPostActions { get; set; } = new HashSet<LikeOwnPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<LikePostAction> LikePostActions { get; set; } = new HashSet<LikePostAction>();
-
-        [NotMapped]
-        public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; } = new HashSet<UnlikeOwnPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<UnlikePostAction> UnlikePostActions { get; set; } = new HashSet<UnlikePostAction>();
-
-        public virtual ICollection<BaseWebsiteImage> WebsiteImages { get; set; } = new HashSet<BaseWebsiteImage>();
-
-        [NotMapped]
-        public virtual ICollection<PostCoverImage> PostCoverImages { get; set; } = new HashSet<PostCoverImage>();
-
-        [NotMapped]
-        public virtual ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
-
         public virtual ICollection<BlogPost> Posts { get; set; } = new HashSet<BlogPost>();
-
-        public virtual ICollection<BaseUserAction> UserActions { get; set; } = new HashSet<BaseUserAction>();
-
-        public virtual ICollection<FollowUserAction> FollowUserActions { get; set; } = new HashSet<FollowUserAction>();
-
-        public virtual ICollection<FollowedUserAction> FollowedUserActions { get; set; } = new HashSet<FollowedUserAction>();
-
-        public virtual ICollection<UnfollowUserAction> UnfollowUserActions { get; set; } = new HashSet<UnfollowUserAction>();
-
-        public virtual ICollection<UnfollowedUserAction> UnfollowedUserActions { get; set; } = new HashSet<UnfollowedUserAction>();
 
         public virtual ICollection<FollowUnfollow> Followers { get; set; } = new HashSet<FollowUnfollow>();
 

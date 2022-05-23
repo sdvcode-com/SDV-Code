@@ -27,36 +27,8 @@ namespace SdvCode.Models.Blog
 
         public BlogCategory Category { get; set; }
 
-        public virtual ICollection<BasePostImage> PostImages { get; set; } = new HashSet<BasePostImage>();
-
         public virtual ICollection<BlogPostTag> PostsTags { get; set; } = new HashSet<BlogPostTag>();
 
         public virtual ICollection<BlogComment> Comments { get; set; } = new HashSet<BlogComment>();
-
-        [NotMapped]
-        public virtual ICollection<PostCoverImage> CoverImages { get; set; } = new HashSet<PostCoverImage>();
-
-        [NotMapped]
-        public virtual ICollection<PostImage> Images { get; set; } = new HashSet<PostImage>();
-
-        public virtual ICollection<BasePostAction> PostActions { get; set; } = new HashSet<BasePostAction>();
-
-        [NotMapped]
-        public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<LikeOwnPostAction> LikeOwnPostActions { get; set; } = new HashSet<LikeOwnPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<LikePostAction> LikePostActions { get; set; } = new HashSet<LikePostAction>();
-
-        [NotMapped]
-        public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; } = new HashSet<UnlikeOwnPostAction>();
-
-        [NotMapped]
-        public virtual ICollection<UnlikePostAction> UnlikePostActions { get; set; } = new HashSet<UnlikePostAction>();
     }
 }
