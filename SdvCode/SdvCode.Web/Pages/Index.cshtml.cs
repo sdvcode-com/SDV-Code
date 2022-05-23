@@ -9,7 +9,6 @@ namespace SdvCode.Pages
 
     using SdvCode.Data;
     using SdvCode.Models.User;
-    using SdvCode.Models.WebsiteActions.Post;
 
     public class IndexModel : PageModel
     {
@@ -24,25 +23,6 @@ namespace SdvCode.Pages
 
         public async Task OnGet()
         {
-            this.db.Users.Add(new User
-            {
-                Id = "603d7154-5d3c-45ba-b2f9-f108941fd55f",
-                AccessFailedCount = 0,
-            });
-            this.db.BlogPosts.Add(new Models.Blog.BlogPost
-            {
-                Id = "6218d619-d461-40b1-83dc-ed69e3ee49db",
-            });
-
-            this.db.LikedPostActions.Add(new LikedPostAction
-            {
-                Id = "b2fc97a8-9ae3-49c2-b963-af2f7ba6c054",
-                OwnerId = "603d7154-5d3c-45ba-b2f9-f108941fd55f",
-                LikerId = "603d7154-5d3c-45ba-b2f9-f108941fd55f",
-                PostId = "6218d619-d461-40b1-83dc-ed69e3ee49db",
-            });
-            await this.db.SaveChangesAsync();
-            var s = await this.db.LikedPostActions.Where(x => x.Post.Id == "6218d619-d461-40b1-83dc-ed69e3ee49db").FirstOrDefaultAsync();
         }
     }
 }

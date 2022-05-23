@@ -11,12 +11,7 @@ namespace SdvCode.Models.User
 
     using SdvCode.Constraints;
     using SdvCode.Models.Blog;
-    using SdvCode.Models.Image;
-    using SdvCode.Models.Image.Post;
     using SdvCode.Models.UserInformation;
-    using SdvCode.Models.WebsiteActions;
-    using SdvCode.Models.WebsiteActions.Post;
-    using SdvCode.Models.WebsiteActions.User;
 
     public class User : IdentityUser
     {
@@ -95,10 +90,6 @@ namespace SdvCode.Models.User
         public virtual ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
 
         public virtual ICollection<BlogPost> Posts { get; set; } = new HashSet<BlogPost>();
-
-        public virtual ICollection<FollowUnfollow> Followers { get; set; } = new HashSet<FollowUnfollow>();
-
-        public virtual ICollection<FollowUnfollow> Followees { get; set; } = new HashSet<FollowUnfollow>();
 
         public virtual ICollection<BlogCategory> BlogCategories { get; set; } = new HashSet<BlogCategory>();
 

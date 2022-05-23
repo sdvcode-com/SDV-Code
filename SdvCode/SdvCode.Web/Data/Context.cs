@@ -10,13 +10,8 @@ namespace SdvCode.Data
 
     using SdvCode.Models;
     using SdvCode.Models.Blog;
-    using SdvCode.Models.Image;
-    using SdvCode.Models.Image.Post;
     using SdvCode.Models.User;
     using SdvCode.Models.UserInformation;
-    using SdvCode.Models.WebsiteActions;
-    using SdvCode.Models.WebsiteActions.Post;
-    using SdvCode.Models.WebsiteActions.User;
 
     public class Context : IdentityDbContext<User, Role, string,
         IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
@@ -49,36 +44,6 @@ namespace SdvCode.Data
 
         public DbSet<State> States { get; set; }
 
-        public DbSet<LikeOwnPostAction> LikeOwnPostActions { get; set; }
-
-        public DbSet<LikedPostAction> LikedPostActions { get; set; }
-
-        public DbSet<LikePostAction> LikePostActions { get; set; }
-
-        public DbSet<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; }
-
-        public DbSet<UnlikedPostAction> UnlikedPostActions { get; set; }
-
-        public DbSet<UnlikePostAction> UnlikePostActions { get; set; }
-
-        public DbSet<PostCoverImage> PostCoverImages { get; set; }
-
-        public DbSet<PostImage> PostImages { get; set; }
-
-        public DbSet<FollowUserAction> FollowUserActions { get; set; }
-
-        public DbSet<FollowedUserAction> FollowedUserActions { get; set; }
-
-        public DbSet<UnfollowUserAction> UnfollowUserActions { get; set; }
-
-        public DbSet<UnfollowedUserAction> UnfollowedUserActions { get; set; }
-
-        //public DbSet<CreatedPostAction> CreatedPostActions { get; set; }
-
-        //public DbSet<CreatePostAction> CreatePostActions { get; set; }
-
-        public DbSet<FollowUnfollow> FollowUnfollows { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -92,13 +57,6 @@ namespace SdvCode.Data
             builder.Entity<Role>().ToTable("Roles");
             builder.Entity<UserRole>().ToTable("UsersRoles");
 
-            builder.Entity<BaseWebsiteAction>().ToTable("BaseWebsiteActions");
-            builder.Entity<BasePostAction>().ToTable("BasePostActions");
-            //builder.Entity<BaseBlogAction>().ToTable("BaseBlogActions");
-            builder.Entity<BaseWebsiteImage>().ToTable("BaseWebsiteImages");
-            builder.Entity<BasePostImage>().ToTable("BasePostImages");
-            builder.Entity<BaseUserAction>().ToTable("BaseUserActions");
-
             builder.Entity<City>().ToTable("Cities");
             builder.Entity<Country>().ToTable("Countries");
             builder.Entity<CountryCode>().ToTable("CountryCodes");
@@ -110,23 +68,6 @@ namespace SdvCode.Data
             builder.Entity<BlogTag>().ToTable("BlogTags");
             builder.Entity<BlogPostTag>().ToTable("BlogPostsTags");
             builder.Entity<BlogComment>().ToTable("BlogComments");
-            builder.Entity<LikeOwnPostAction>().ToTable("LikeOwnPostActions");
-            builder.Entity<LikedPostAction>().ToTable("LikedPostActions");
-            builder.Entity<LikePostAction>().ToTable("LikePostActions");
-            builder.Entity<UnlikeOwnPostAction>().ToTable("UnlikeOwnPostActions");
-            builder.Entity<UnlikedPostAction>().ToTable("UnlikedPostActions");
-            builder.Entity<UnlikePostAction>().ToTable("UnlikePostActions");
-            //builder.Entity<CreatedPostAction>().ToTable("CreatedPostActions");
-            //builder.Entity<CreatePostAction>().ToTable("CreatePostActions");
-
-            builder.Entity<PostCoverImage>().ToTable("PostCoverImages");
-            builder.Entity<PostImage>().ToTable("PostImages");
-
-            builder.Entity<FollowUnfollow>().ToTable("FollowUnfollows");
-            builder.Entity<FollowUserAction>().ToTable("FollowUserActions");
-            builder.Entity<FollowedUserAction>().ToTable("FollowedUserActions");
-            builder.Entity<UnfollowUserAction>().ToTable("UnfollowUserActions");
-            builder.Entity<UnfollowedUserAction>().ToTable("UnfollowedUserActions");
 
             builder.Entity<City>(entity =>
             {
@@ -189,18 +130,6 @@ namespace SdvCode.Data
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
 
-                entity.HasMany(x => x.Followers)
-                    .WithOne(x => x.Followed)
-                    .HasForeignKey(x => x.FollowedId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
-
-                entity.HasMany(x => x.Followees)
-                    .WithOne(x => x.Follower)
-                    .HasForeignKey(x => x.FollowerId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
-
                 entity.HasMany(x => x.BlogCategories)
                     .WithOne(x => x.Owner)
                     .HasForeignKey(x => x.OwnerId)
@@ -226,11 +155,6 @@ namespace SdvCode.Data
                     .WithOne(e => e.Role)
                     .HasForeignKey(ur => ur.RoleId)
                     .IsRequired();
-            });
-
-            builder.Entity<FollowUnfollow>(entity =>
-            {
-                entity.HasKey(x => new { x.FollowedId, x.FollowerId });
             });
 
             builder.Entity<BlogPost>(entity =>

@@ -4,13 +4,8 @@
 
 namespace SdvCode.Models.Blog
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class BlogPostTag
     {
@@ -25,7 +20,7 @@ namespace SdvCode.Models.Blog
         public BlogTag Tag { get; set; }
 
         [Required]
-        [ForeignKey(nameof(Blog.BlogPost))]
+        [ForeignKey(nameof(BlogPost))]
         public string PostId { get; set; }
 
         public BlogPost Post { get; set; }

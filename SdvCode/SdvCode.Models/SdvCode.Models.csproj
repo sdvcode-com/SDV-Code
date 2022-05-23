@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="WebsiteActions\Blog\" />
-    <Folder Include="WebsiteActions\Profile\" />
+    <Folder Include="Image\" />
+    <Folder Include="WebsiteActions\" />
   </ItemGroup>
 
 </Project>
