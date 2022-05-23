@@ -1,12 +1,13 @@
-﻿// <copyright file="Action.cs" company="SDV Code Data Models">
+﻿// <copyright file="WebsiteAction.cs" company="SDV Code Data Models">
 // Copyright (c) SDV Code Data Models. All rights reserved.
 // </copyright>
 
-namespace SdvCode.Models.Actions
+namespace SdvCode.Models.WebsiteActions
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -14,10 +15,11 @@ namespace SdvCode.Models.Actions
     using Microsoft.AspNetCore.Mvc;
 
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
 
-    public abstract class Action : BaseData
+    public abstract class WebsiteAction : BaseData
     {
-        protected Action()
+        protected WebsiteAction()
         {
             this.ActionStatus = WebsiteActionStatus.Unread;
         }
@@ -30,6 +32,16 @@ namespace SdvCode.Models.Actions
         [EnumDataType(typeof(WebsiteActionStatus))]
         public WebsiteActionStatus ActionStatus { get; set; }
 
-        public virtual ICollection<UserAction> UsersActions { get; set; } = new HashSet<UserAction>();
+        [Required]
+        [ForeignKey(nameof(User))]
+        public string OwnerId { get; set; }
+
+        public User Owner { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(User))]
+        public string ReceiverId { get; set; }
+
+        public User Receiver { get; set; }
     }
 }

@@ -8,6 +8,8 @@ namespace SdvCode.Models.Blog
     using System.ComponentModel.DataAnnotations.Schema;
 
     using SdvCode.Models.User;
+    using SdvCode.Models.WebsiteActions.Blog;
+    using SdvCode.Models.WebsiteActions.Post;
 
     public class BlogPost : BaseData
     {
@@ -28,5 +30,9 @@ namespace SdvCode.Models.Blog
         public virtual ICollection<BlogPostTag> PostsTags { get; set; } = new HashSet<BlogPostTag>();
 
         public virtual ICollection<BlogComment> Comments { get; set; } = new HashSet<BlogComment>();
+
+        public virtual ICollection<LikePostAction> LikePostActions { get; set; } = new HashSet<LikePostAction>();
+
+        public virtual ICollection<CreatePostAction> CreatePostActions { get; set; } = new HashSet<CreatePostAction>();
     }
 }

@@ -9,10 +9,12 @@ namespace SdvCode.Data
     using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Models;
-    using SdvCode.Models.Actions;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Models.UserInformation;
+    using SdvCode.Models.WebsiteActions;
+    using SdvCode.Models.WebsiteActions.Blog;
+    using SdvCode.Models.WebsiteActions.Post;
 
     public class Context : IdentityDbContext<User, Role, string,
         IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
@@ -45,7 +47,11 @@ namespace SdvCode.Data
 
         public DbSet<State> States { get; set; }
 
-        public DbSet<UserAction> UsersActions { get; set; }
+        public DbSet<WebsiteAction> WebsiteActions { get; set; }
+
+        public DbSet<LikePostAction> LikePostActions { get; set; }
+
+        public DbSet<CreatePostAction> CreatePostActions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,7 +62,7 @@ namespace SdvCode.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Action>().ToTable("Actions");
+            builder.Entity<WebsiteAction>().ToTable("WebsiteActions");
 
             builder.Entity<User>().ToTable("Users");
             builder.Entity<Role>().ToTable("Roles");
@@ -74,7 +80,8 @@ namespace SdvCode.Data
             builder.Entity<BlogPostTag>().ToTable("BlogPostsTags");
             builder.Entity<BlogComment>().ToTable("BlogComments");
 
-            builder.Entity<UserAction>().ToTable("UsersActions");
+            builder.Entity<LikePostAction>().ToTable("LikePostActions");
+            builder.Entity<CreatePostAction>().ToTable("CreatePostActions");
 
             builder.Entity<City>(entity =>
             {
@@ -94,11 +101,13 @@ namespace SdvCode.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            builder.Entity<Country>()
-                .HasOne(e => e.CountryCode)
-                .WithMany(e => e.Coutries)
-                .HasForeignKey(e => e.CountryCodeId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Country>(entity =>
+            {
+                entity.HasOne(e => e.CountryCode)
+                    .WithMany(e => e.Coutries)
+                    .HasForeignKey(e => e.CountryCodeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
             builder.Entity<User>(entity =>
             {
@@ -156,31 +165,9 @@ namespace SdvCode.Data
                     .IsRequired(false);
             });
 
-            builder.Entity<UserAction>(b =>
+            builder.Entity<Role>(entity =>
             {
-                b.HasOne(e => e.Owner)
-                    .WithMany(e => e.UserActions)
-                    .HasForeignKey(ur => ur.OwnerId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
-
-                b.HasOne(e => e.Receiver)
-                    .WithMany(e => e.ReceivedActions)
-                    .HasForeignKey(ur => ur.ReceiverId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
-
-                b.HasKey(x => new
-                {
-                    x.ActionId,
-                    x.OwnerId,
-                    x.ReceiverId,
-                });
-            });
-
-            builder.Entity<Role>(b =>
-            {
-                b.HasMany(e => e.UsersRoles)
+                entity.HasMany(e => e.UsersRoles)
                     .WithOne(e => e.Role)
                     .HasForeignKey(ur => ur.RoleId)
                     .IsRequired();
@@ -219,6 +206,21 @@ namespace SdvCode.Data
             builder.Entity<BlogPostTag>(entity =>
             {
                 entity.HasKey(x => new { x.PostId, x.TagId });
+            });
+
+            builder.Entity<WebsiteAction>(entity =>
+            {
+                entity.HasOne(x => x.Owner)
+                    .WithMany(x => x.UserActions)
+                    .HasForeignKey(x => x.OwnerId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                entity.HasOne(x => x.Receiver)
+                    .WithMany(x => x.ReceivedActions)
+                    .HasForeignKey(x => x.ReceiverId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
             });
         }
     }

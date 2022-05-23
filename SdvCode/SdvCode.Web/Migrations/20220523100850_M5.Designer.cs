@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
@@ -11,9 +12,10 @@ using SdvCode.Data;
 namespace SdvCode.Web.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220523100850_M5")]
+    partial class M5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,6 +113,26 @@ namespace SdvCode.Web.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Actions.UserAction", b =>
+                {
+                    b.Property<string>("ActionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ActionId", "OwnerId", "ReceiverId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.ToTable("UsersActions", (string)null);
                 });
 
             modelBuilder.Entity("SdvCode.Models.BaseData", b =>
@@ -351,6 +373,19 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("UsersRoles", (string)null);
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Actions.Action", b =>
+                {
+                    b.HasBaseType("SdvCode.Models.BaseData");
+
+                    b.Property<int>("ActionStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ActionType")
+                        .HasColumnType("int");
+
+                    b.ToTable("Actions", (string)null);
+                });
+
             modelBuilder.Entity("SdvCode.Models.Blog.BlogCategory", b =>
                 {
                     b.HasBaseType("SdvCode.Models.BaseData");
@@ -505,47 +540,9 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("ZipCodes", (string)null);
                 });
 
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.WebsiteAction", b =>
+            modelBuilder.Entity("SdvCode.Models.Actions.Post.LikePostAction", b =>
                 {
-                    b.HasBaseType("SdvCode.Models.BaseData");
-
-                    b.Property<int>("ActionStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ActionType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ReceiverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.ToTable("WebsiteActions", (string)null);
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Blog.CreatePostAction", b =>
-                {
-                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
-
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("CreatePostActions", (string)null);
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.LikePostAction", b =>
-                {
-                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
+                    b.HasBaseType("SdvCode.Models.Actions.Action");
 
                     b.Property<string>("PostId")
                         .IsRequired()
@@ -590,6 +587,33 @@ namespace SdvCode.Web.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Actions.UserAction", b =>
+                {
+                    b.HasOne("SdvCode.Models.Actions.Action", "Action")
+                        .WithMany("UsersActions")
+                        .HasForeignKey("ActionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.User", "Owner")
+                        .WithMany("UserActions")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.User", "Receiver")
+                        .WithMany("ReceivedActions")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Action");
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Receiver");
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogPostTag", b =>
@@ -666,6 +690,15 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Actions.Action", b =>
+                {
+                    b.HasOne("SdvCode.Models.BaseData", null)
+                        .WithOne()
+                        .HasForeignKey("SdvCode.Models.Actions.Action", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlogCategory", b =>
@@ -837,53 +870,11 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.WebsiteAction", b =>
+            modelBuilder.Entity("SdvCode.Models.Actions.Post.LikePostAction", b =>
                 {
-                    b.HasOne("SdvCode.Models.BaseData", null)
+                    b.HasOne("SdvCode.Models.Actions.Action", null)
                         .WithOne()
-                        .HasForeignKey("SdvCode.Models.WebsiteActions.WebsiteAction", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.User.User", "Owner")
-                        .WithMany("UserActions")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.User.User", "Receiver")
-                        .WithMany("ReceivedActions")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-
-                    b.Navigation("Receiver");
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Blog.CreatePostAction", b =>
-                {
-                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
-                        .WithOne()
-                        .HasForeignKey("SdvCode.Models.WebsiteActions.Blog.CreatePostAction", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.Blog.BlogPost", "Post")
-                        .WithMany("CreatePostActions")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("SdvCode.Models.WebsiteActions.Post.LikePostAction", b =>
-                {
-                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
-                        .WithOne()
-                        .HasForeignKey("SdvCode.Models.WebsiteActions.Post.LikePostAction", "Id")
+                        .HasForeignKey("SdvCode.Models.Actions.Post.LikePostAction", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
@@ -918,6 +909,11 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Actions.Action", b =>
+                {
+                    b.Navigation("UsersActions");
+                });
+
             modelBuilder.Entity("SdvCode.Models.Blog.BlogCategory", b =>
                 {
                     b.Navigation("Posts");
@@ -926,8 +922,6 @@ namespace SdvCode.Web.Migrations
             modelBuilder.Entity("SdvCode.Models.Blog.BlogPost", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("CreatePostActions");
 
                     b.Navigation("LikePostActions");
 

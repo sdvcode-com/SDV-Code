@@ -10,9 +10,9 @@ namespace SdvCode.Models.User
     using Microsoft.AspNetCore.Identity;
 
     using SdvCode.Constraints;
-    using SdvCode.Models.Actions;
     using SdvCode.Models.Blog;
     using SdvCode.Models.UserInformation;
+    using SdvCode.Models.WebsiteActions;
 
     public class User : IdentityUser
     {
@@ -98,8 +98,8 @@ namespace SdvCode.Models.User
 
         public virtual ICollection<BlogComment> BlogComments { get; set; } = new HashSet<BlogComment>();
 
-        public virtual ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
+        public virtual ICollection<WebsiteAction> UserActions { get; set; } = new HashSet<WebsiteAction>();
 
-        public virtual ICollection<UserAction> ReceivedActions { get; set; } = new HashSet<UserAction>();
+        public virtual ICollection<WebsiteAction> ReceivedActions { get; set; } = new HashSet<WebsiteAction>();
     }
 }
