@@ -24,6 +24,6 @@ namespace SdvCode.Models.Blog
 
         public User Owner { get; set; }
 
-        public virtual ICollection<BlogPostTag> BlogPostsTags { get; set; } = new HashSet<BlogPostTag>();
+        public virtual ICollection<BlogPostTag> PostsTags { get; set; } = new HashSet<BlogPostTag>();
     }
 }

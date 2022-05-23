@@ -22,14 +22,16 @@ namespace SdvCode.Models.Blog
 
         public User Author { get; set; }
 
-        [ForeignKey(nameof(Blog.BlogCategory))]
-        public string? BlogCategoryId { get; set; }
+        [ForeignKey(nameof(BlogCategory))]
+        public string? CategoryId { get; set; }
 
-        public BlogCategory BlogCategory { get; set; }
+        public BlogCategory Category { get; set; }
 
         public virtual ICollection<BasePostImage> PostImages { get; set; } = new HashSet<BasePostImage>();
 
-        public virtual ICollection<BlogPostTag> BlogPostsTags { get; set; } = new HashSet<BlogPostTag>();
+        public virtual ICollection<BlogPostTag> PostsTags { get; set; } = new HashSet<BlogPostTag>();
+
+        public virtual ICollection<BlogComment> Comments { get; set; } = new HashSet<BlogComment>();
 
         [NotMapped]
         public virtual ICollection<PostCoverImage> CoverImages { get; set; } = new HashSet<PostCoverImage>();

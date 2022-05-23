@@ -67,5 +67,8 @@ namespace SdvCode.Models.Enums
 
         [Display(Name = "Edit Own Post")]
         EditOwnPost = 20,
+
+        [Display(Name = "Created Post")]
+        CreatedPost = 21,
     }
 }

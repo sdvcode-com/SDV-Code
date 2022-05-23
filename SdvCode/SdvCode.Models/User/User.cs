@@ -141,5 +141,7 @@ namespace SdvCode.Models.User
         public virtual ICollection<BlogCategory> BlogCategories { get; set; } = new HashSet<BlogCategory>();
 
         public virtual ICollection<BlogTag> BlogTags { get; set; } = new HashSet<BlogTag>();
+
+        public virtual ICollection<BlogComment> BlogComments { get; set; } = new HashSet<BlogComment>();
     }
 }

@@ -34,7 +34,10 @@ namespace SdvCode.Data
         public DbSet<BlogCategory> BlogCategories { get; set; }
 
         public DbSet<BlogTag> BlogTags { get; set; }
+
         public DbSet<BlogPostTag> BlogPostsTags { get; set; }
+
+        public DbSet<BlogComment> BlogComments { get; set; }
 
         public DbSet<City> Cities { get; set; }
 
@@ -70,6 +73,10 @@ namespace SdvCode.Data
 
         public DbSet<UnfollowedUserAction> UnfollowedUserActions { get; set; }
 
+        //public DbSet<CreatedPostAction> CreatedPostActions { get; set; }
+
+        //public DbSet<CreatePostAction> CreatePostActions { get; set; }
+
         public DbSet<FollowUnfollow> FollowUnfollows { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -87,6 +94,7 @@ namespace SdvCode.Data
 
             builder.Entity<BaseWebsiteAction>().ToTable("BaseWebsiteActions");
             builder.Entity<BasePostAction>().ToTable("BasePostActions");
+            //builder.Entity<BaseBlogAction>().ToTable("BaseBlogActions");
             builder.Entity<BaseWebsiteImage>().ToTable("BaseWebsiteImages");
             builder.Entity<BasePostImage>().ToTable("BasePostImages");
             builder.Entity<BaseUserAction>().ToTable("BaseUserActions");
@@ -101,12 +109,15 @@ namespace SdvCode.Data
             builder.Entity<BlogCategory>().ToTable("BlogCategories");
             builder.Entity<BlogTag>().ToTable("BlogTags");
             builder.Entity<BlogPostTag>().ToTable("BlogPostsTags");
+            builder.Entity<BlogComment>().ToTable("BlogComments");
             builder.Entity<LikeOwnPostAction>().ToTable("LikeOwnPostActions");
             builder.Entity<LikedPostAction>().ToTable("LikedPostActions");
             builder.Entity<LikePostAction>().ToTable("LikePostActions");
             builder.Entity<UnlikeOwnPostAction>().ToTable("UnlikeOwnPostActions");
             builder.Entity<UnlikedPostAction>().ToTable("UnlikedPostActions");
             builder.Entity<UnlikePostAction>().ToTable("UnlikePostActions");
+            //builder.Entity<CreatedPostAction>().ToTable("CreatedPostActions");
+            //builder.Entity<CreatePostAction>().ToTable("CreatePostActions");
 
             builder.Entity<PostCoverImage>().ToTable("PostCoverImages");
             builder.Entity<PostImage>().ToTable("PostImages");
@@ -201,6 +212,12 @@ namespace SdvCode.Data
                     .HasForeignKey(x => x.OwnerId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
+
+                entity.HasMany(x => x.BlogComments)
+                    .WithOne(x => x.Owner)
+                    .HasForeignKey(x => x.OwnerId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
             });
 
             builder.Entity<Role>(b =>
@@ -218,31 +235,37 @@ namespace SdvCode.Data
 
             builder.Entity<BlogPost>(entity =>
             {
-                entity.HasOne(x => x.BlogCategory)
-                    .WithMany(x => x.BlogPosts)
-                    .HasForeignKey(x => x.BlogCategoryId)
+                entity.HasOne(x => x.Category)
+                    .WithMany(x => x.Posts)
+                    .HasForeignKey(x => x.CategoryId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
 
-                entity.HasMany(x => x.BlogPostsTags)
-                    .WithOne(x => x.BlogPost)
-                    .HasForeignKey(x => x.BlogPostId)
+                entity.HasMany(x => x.PostsTags)
+                    .WithOne(x => x.Post)
+                    .HasForeignKey(x => x.PostId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                entity.HasMany(e => e.Comments)
+                    .WithOne(e => e.Post)
+                    .HasForeignKey(e => e.PostId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
             });
 
             builder.Entity<BlogTag>(entity =>
             {
-                entity.HasMany(x => x.BlogPostsTags)
-                    .WithOne(x => x.BlogTag)
-                    .HasForeignKey(x => x.BlogTagId)
+                entity.HasMany(x => x.PostsTags)
+                    .WithOne(x => x.Tag)
+                    .HasForeignKey(x => x.TagId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
             });
 
             builder.Entity<BlogPostTag>(entity =>
             {
-                entity.HasKey(x => new { x.BlogPostId, x.BlogTagId });
+                entity.HasKey(x => new { x.PostId, x.TagId });
             });
         }
     }

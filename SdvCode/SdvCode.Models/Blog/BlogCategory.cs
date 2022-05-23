@@ -24,6 +24,6 @@ namespace SdvCode.Models.Blog
 
         public User Owner { get; set; }
 
-        public virtual ICollection<BlogPost> BlogPosts { get; set; } = new HashSet<BlogPost>();
+        public virtual ICollection<BlogPost> Posts { get; set; } = new HashSet<BlogPost>();
     }
 }
