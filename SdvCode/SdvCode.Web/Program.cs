@@ -2,6 +2,7 @@
 // Copyright (c) SDV Code. All rights reserved.
 // </copyright>
 
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,13 +35,6 @@ else
     app.UseHsts();
 }
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-});
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -50,5 +44,22 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
+app.Use(async (context, next) =>
+{
+    // Middleware logic
+    await next();
+});
 
 app.Run();

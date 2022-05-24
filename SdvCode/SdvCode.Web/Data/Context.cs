@@ -75,6 +75,12 @@ namespace SdvCode.Data
 
         public DbSet<EditOwnPostAction> EditOwnPostAction { get; set; }
 
+        public DbSet<DeletePostAction> DeletePostActions { get; set; }
+
+        public DbSet<DeletedPostAction> DeletedPostActions { get; set; }
+
+        public DbSet<DeleteOwnPostAction> DeleteOwnPostActions { get; set; }
+
         public DbSet<UserProfileImage> UserProfileImages { get; set; }
 
         public DbSet<UserCoverImage> UserCoverImages { get; set; }
@@ -131,6 +137,9 @@ namespace SdvCode.Data
             builder.Entity<EditPostAction>().ToTable("EditPostActions");
             builder.Entity<EditedPostAction>().ToTable("EditedPostActions");
             builder.Entity<EditOwnPostAction>().ToTable("EditOwnPostActions");
+            builder.Entity<DeletePostAction>().ToTable("DeletePostActions");
+            builder.Entity<DeletedPostAction>().ToTable("DeletedPostActions");
+            builder.Entity<DeleteOwnPostAction>().ToTable("DeleteOwnPostActions");
 
             builder.Entity<UserProfileImage>().ToTable("UserProfileImages");
             builder.Entity<UserCoverImage>().ToTable("UserCoverImages");

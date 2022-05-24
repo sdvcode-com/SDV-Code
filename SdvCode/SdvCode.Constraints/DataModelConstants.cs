@@ -41,5 +41,7 @@ namespace SdvCode.Constraints
         public const int ImageCloudinaryPathMaxLength = 200;
 
         public const int EditPersonalDataMessageMaxLength = 500;
+
+        public const int PostReasonToBeDeletedMaxLength = 500;
     }
 }
