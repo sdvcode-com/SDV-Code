@@ -34,6 +34,13 @@ else
     app.UseHsts();
 }
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

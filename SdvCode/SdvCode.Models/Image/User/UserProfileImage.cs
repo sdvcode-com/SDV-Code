@@ -5,6 +5,7 @@
 namespace SdvCode.Models.Image.User
 {
     using SdvCode.Models.Enums;
+    using SdvCode.Models.WebsiteActions.User;
 
     public class UserProfileImage : WebsiteImage
     {
@@ -14,5 +15,7 @@ namespace SdvCode.Models.Image.User
             this.CloudinaryPath = $"/Users/{this.OwnerId}_{this.Owner.UserName}/ProfileImages/";
             this.SystemName = $"{this.Owner.UserName}_{this.Id}";
         }
+
+        public virtual ICollection<ChangeProfileImageAction> Actions { get; set; } = new HashSet<ChangeProfileImageAction>();
     }
 }

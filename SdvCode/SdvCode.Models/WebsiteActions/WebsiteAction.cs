@@ -8,7 +8,6 @@ namespace SdvCode.Models.WebsiteActions
     using System.ComponentModel.DataAnnotations.Schema;
 
     using SdvCode.Models.Enums;
-    using SdvCode.Models.User;
 
     public abstract class WebsiteAction : BaseData
     {
@@ -26,15 +25,15 @@ namespace SdvCode.Models.WebsiteActions
         public WebsiteActionStatus ActionStatus { get; set; }
 
         [Required]
-        [ForeignKey(nameof(User))]
+        [ForeignKey(nameof(Models.User.User))]
         public string OwnerId { get; set; }
 
-        public User Owner { get; set; }
+        public Models.User.User Owner { get; set; }
 
         [Required]
-        [ForeignKey(nameof(User))]
+        [ForeignKey(nameof(Models.User.User))]
         public string ReceiverId { get; set; }
 
-        public User Receiver { get; set; }
+        public Models.User.User Receiver { get; set; }
     }
 }

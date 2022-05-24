@@ -20,11 +20,11 @@ namespace SdvCode.Models.Enums
         [Display(Name = "Unfollowed")]
         Unfollowed = 4,
 
-        [Display(Name = "Change Cover Image")]
-        ChangeCoverImage = 5,
+        [Display(Name = "Change Profile Cover Image")]
+        ChangeProfileCoverImage = 5,
 
-        [Display(Name = "Change Profile Picture")]
-        ChangeProfilePicture = 6,
+        [Display(Name = "Change Profile Image")]
+        ChangeProfileImage = 6,
 
         [Display(Name = "Edit Personal Data")]
         EditPersonalData = 7,

@@ -33,4 +33,23 @@
     <ProjectReference Include="..\SdvCode.Models\SdvCode.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Controllers\" />
+    <Folder Include="Areas\Administration\Data\" />
+    <Folder Include="Areas\Administration\Models\" />
+    <Folder Include="Areas\Administration\Views\" />
+    <Folder Include="Areas\Chat\Controllers\" />
+    <Folder Include="Areas\Chat\Data\" />
+    <Folder Include="Areas\Chat\Models\" />
+    <Folder Include="Areas\Chat\Views\" />
+    <Folder Include="Areas\Editor\Controllers\" />
+    <Folder Include="Areas\Editor\Data\" />
+    <Folder Include="Areas\Editor\Models\" />
+    <Folder Include="Areas\Editor\Views\" />
+    <Folder Include="Areas\Shop\Controllers\" />
+    <Folder Include="Areas\Shop\Data\" />
+    <Folder Include="Areas\Shop\Models\" />
+    <Folder Include="Areas\Shop\Views\" />
+  </ItemGroup>
+
 </Project>

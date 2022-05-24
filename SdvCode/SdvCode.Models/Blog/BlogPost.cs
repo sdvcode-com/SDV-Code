@@ -7,12 +7,9 @@ namespace SdvCode.Models.Blog
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using SdvCode.Models.Image;
     using SdvCode.Models.Image.Post;
     using SdvCode.Models.User;
     using SdvCode.Models.WebsiteActions;
-    using SdvCode.Models.WebsiteActions.Blog;
-    using SdvCode.Models.WebsiteActions.Post;
 
     public class BlogPost : BaseData
     {

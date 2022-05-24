@@ -39,5 +39,7 @@ namespace SdvCode.Constraints
         public const int ImageExtensionMaxLength = 10;
 
         public const int ImageCloudinaryPathMaxLength = 200;
+
+        public const int EditPersonalDataMessageMaxLength = 500;
     }
 }

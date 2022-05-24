@@ -18,6 +18,7 @@ namespace SdvCode.Data
     using SdvCode.Models.WebsiteActions;
     using SdvCode.Models.WebsiteActions.Blog;
     using SdvCode.Models.WebsiteActions.Post;
+    using SdvCode.Models.WebsiteActions.User;
 
     public class Context : IdentityDbContext<User, Role, string,
         IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
@@ -82,6 +83,12 @@ namespace SdvCode.Data
 
         public DbSet<PostCoverImage> PostCoverImages { get; set; }
 
+        public DbSet<EditPersonalDataAction> EditPersonalDataActions { get; set; }
+
+        public DbSet<ChangeProfileCoverImageAction> ChangeProfileCoverImageActions { get; set; }
+
+        public DbSet<ChangeProfileImageAction> ChangeProfileImageActions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -130,6 +137,10 @@ namespace SdvCode.Data
 
             builder.Entity<PostImage>().ToTable("PostImages");
             builder.Entity<PostCoverImage>().ToTable("PostCoverImages");
+
+            builder.Entity<EditPersonalDataAction>().ToTable("EditPersonalDataActions");
+            builder.Entity<ChangeProfileCoverImageAction>().ToTable("ChangeProfileCoverImageActions");
+            builder.Entity<ChangeProfileImageAction>().ToTable("ChangeProfileImageActions");
 
             builder.Entity<City>(entity =>
             {

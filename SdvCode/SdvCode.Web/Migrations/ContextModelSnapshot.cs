@@ -612,6 +612,44 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("BasePostActions", (string)null);
                 });
 
+            modelBuilder.Entity("SdvCode.Models.WebsiteActions.User.ChangeProfileCoverImageAction", b =>
+                {
+                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
+
+                    b.Property<string>("UserCoverImageId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("UserCoverImageId");
+
+                    b.ToTable("ChangeProfileCoverImageActions", (string)null);
+                });
+
+            modelBuilder.Entity("SdvCode.Models.WebsiteActions.User.ChangeProfileImageAction", b =>
+                {
+                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
+
+                    b.Property<string>("UserProfileImageId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("UserProfileImageId");
+
+                    b.ToTable("ChangeProfileImageActions", (string)null);
+                });
+
+            modelBuilder.Entity("SdvCode.Models.WebsiteActions.User.EditPersonalDataAction", b =>
+                {
+                    b.HasBaseType("SdvCode.Models.WebsiteActions.WebsiteAction");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.ToTable("EditPersonalDataActions", (string)null);
+                });
+
             modelBuilder.Entity("SdvCode.Models.Image.Post.PostCoverImage", b =>
                 {
                     b.HasBaseType("SdvCode.Models.Image.Post.BasePostImage");
@@ -1078,6 +1116,49 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("SdvCode.Models.WebsiteActions.User.ChangeProfileCoverImageAction", b =>
+                {
+                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
+                        .WithOne()
+                        .HasForeignKey("SdvCode.Models.WebsiteActions.User.ChangeProfileCoverImageAction", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.Image.User.UserCoverImage", "Image")
+                        .WithMany("Actions")
+                        .HasForeignKey("UserCoverImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.WebsiteActions.User.ChangeProfileImageAction", b =>
+                {
+                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
+                        .WithOne()
+                        .HasForeignKey("SdvCode.Models.WebsiteActions.User.ChangeProfileImageAction", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.Image.User.UserProfileImage", "Image")
+                        .WithMany("Actions")
+                        .HasForeignKey("UserProfileImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.WebsiteActions.User.EditPersonalDataAction", b =>
+                {
+                    b.HasOne("SdvCode.Models.WebsiteActions.WebsiteAction", null)
+                        .WithOne()
+                        .HasForeignKey("SdvCode.Models.WebsiteActions.User.EditPersonalDataAction", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SdvCode.Models.Image.Post.PostCoverImage", b =>
                 {
                     b.HasOne("SdvCode.Models.Image.Post.BasePostImage", null)
@@ -1273,6 +1354,16 @@ namespace SdvCode.Web.Migrations
             modelBuilder.Entity("SdvCode.Models.UserInformation.ZipCode", b =>
                 {
                     b.Navigation("ApplicationUsers");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Image.User.UserCoverImage", b =>
+                {
+                    b.Navigation("Actions");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Image.User.UserProfileImage", b =>
+                {
+                    b.Navigation("Actions");
                 });
 #pragma warning restore 612, 618
         }
