@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -186,6 +187,8 @@ namespace SdvCode.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RegisteredOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     MiddleName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
@@ -364,6 +367,31 @@ namespace SdvCode.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Follows",
+                columns: table => new
+                {
+                    FollowerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FolloweeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsFollow = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Follows", x => new { x.FollowerId, x.FolloweeId });
+                    table.ForeignKey(
+                        name: "FK_Follows_Users_FolloweeId",
+                        column: x => x.FolloweeId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Follows_Users_FollowerId",
+                        column: x => x.FollowerId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UsersRoles",
                 columns: table => new
                 {
@@ -424,6 +452,10 @@ namespace SdvCode.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    SystemName = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Extension = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    CloudinaryPath = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     ImageType = table.Column<int>(type: "int", nullable: false),
                     OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -473,6 +505,39 @@ namespace SdvCode.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EditPersonalDataActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EditPersonalDataActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EditPersonalDataActions_WebsiteActions_Id",
+                        column: x => x.Id,
+                        principalTable: "WebsiteActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCoverImages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCoverImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserCoverImages_WebsiteImages_Id",
+                        column: x => x.Id,
+                        principalTable: "WebsiteImages",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserProfileImages",
                 columns: table => new
                 {
@@ -486,6 +551,77 @@ namespace SdvCode.Web.Migrations
                         column: x => x.Id,
                         principalTable: "WebsiteImages",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BasePostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BasePostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BasePostActions_BlogPosts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BasePostActions_WebsiteActions_Id",
+                        column: x => x.Id,
+                        principalTable: "WebsiteActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BasePostImages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BasePostImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BasePostImages_BlogPosts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BasePostImages_WebsiteImages_Id",
+                        column: x => x.Id,
+                        principalTable: "WebsiteImages",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BlockedPosts",
+                columns: table => new
+                {
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlockedPosts", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_BlockedPosts_BlogPosts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BlockedPosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -525,6 +661,31 @@ namespace SdvCode.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlogPostLikes",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsLiked = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogPostLikes", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_BlogPostLikes_BlogPosts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BlogPostLikes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BlogPostsTags",
                 columns: table => new
                 {
@@ -549,25 +710,114 @@ namespace SdvCode.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CreatedPostActions",
+                name: "FavoritePosts",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsFavorite = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CreatedPostActions", x => x.Id);
+                    table.PrimaryKey("PK_FavoritePosts", x => new { x.UserId, x.PostId });
                     table.ForeignKey(
-                        name: "FK_CreatedPostActions_BlogPosts_PostId",
+                        name: "FK_FavoritePosts_BlogPosts_PostId",
                         column: x => x.PostId,
                         principalTable: "BlogPosts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CreatedPostActions_WebsiteActions_Id",
+                        name: "FK_FavoritePosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PendingPosts",
+                columns: table => new
+                {
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsPending = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PendingPosts", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_PendingPosts_BlogPosts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PendingPosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChangeProfileCoverImageActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserCoverImageId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChangeProfileCoverImageActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChangeProfileCoverImageActions_UserCoverImages_UserCoverImageId",
+                        column: x => x.UserCoverImageId,
+                        principalTable: "UserCoverImages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChangeProfileCoverImageActions_WebsiteActions_Id",
                         column: x => x.Id,
                         principalTable: "WebsiteActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChangeProfileImageActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserProfileImageId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChangeProfileImageActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChangeProfileImageActions_UserProfileImages_UserProfileImageId",
+                        column: x => x.UserProfileImageId,
+                        principalTable: "UserProfileImages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChangeProfileImageActions_WebsiteActions_Id",
+                        column: x => x.Id,
+                        principalTable: "WebsiteActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CreatedPostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CreatedPostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CreatedPostActions_BasePostActions_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostActions",
                         principalColumn: "Id");
                 });
 
@@ -575,22 +825,114 @@ namespace SdvCode.Web.Migrations
                 name: "CreatePostActions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CreatePostActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CreatePostActions_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CreatePostActions_WebsiteActions_Id",
+                        name: "FK_CreatePostActions_BasePostActions_Id",
                         column: x => x.Id,
-                        principalTable: "WebsiteActions",
+                        principalTable: "BasePostActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeletedPostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReasonToBeDeleted = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeletedPostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeletedPostActions_BasePostActions_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeleteOwnPostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReasonToBeDeleted = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeleteOwnPostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeleteOwnPostActions_BasePostActions_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeletePostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReasonToBeDeleted = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeletePostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeletePostActions_BasePostActions_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EditedPostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EditedPostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EditedPostActions_BasePostActions_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EditOwnPostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EditOwnPostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EditOwnPostActions_BasePostActions_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EditPostActions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EditPostActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EditPostActions_BasePostActions_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostActions",
                         principalColumn: "Id");
                 });
 
@@ -598,22 +940,15 @@ namespace SdvCode.Web.Migrations
                 name: "LikedPostActions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LikedPostActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LikedPostActions_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LikedPostActions_WebsiteActions_Id",
+                        name: "FK_LikedPostActions_BasePostActions_Id",
                         column: x => x.Id,
-                        principalTable: "WebsiteActions",
+                        principalTable: "BasePostActions",
                         principalColumn: "Id");
                 });
 
@@ -621,22 +956,15 @@ namespace SdvCode.Web.Migrations
                 name: "LikeOwnPostActions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LikeOwnPostActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LikeOwnPostActions_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LikeOwnPostActions_WebsiteActions_Id",
+                        name: "FK_LikeOwnPostActions_BasePostActions_Id",
                         column: x => x.Id,
-                        principalTable: "WebsiteActions",
+                        principalTable: "BasePostActions",
                         principalColumn: "Id");
                 });
 
@@ -644,22 +972,15 @@ namespace SdvCode.Web.Migrations
                 name: "LikePostActions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LikePostActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LikePostActions_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LikePostActions_WebsiteActions_Id",
+                        name: "FK_LikePostActions_BasePostActions_Id",
                         column: x => x.Id,
-                        principalTable: "WebsiteActions",
+                        principalTable: "BasePostActions",
                         principalColumn: "Id");
                 });
 
@@ -667,22 +988,15 @@ namespace SdvCode.Web.Migrations
                 name: "UnlikedPostActions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UnlikedPostActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UnlikedPostActions_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UnlikedPostActions_WebsiteActions_Id",
+                        name: "FK_UnlikedPostActions_BasePostActions_Id",
                         column: x => x.Id,
-                        principalTable: "WebsiteActions",
+                        principalTable: "BasePostActions",
                         principalColumn: "Id");
                 });
 
@@ -690,22 +1004,15 @@ namespace SdvCode.Web.Migrations
                 name: "UnlikeOwnPostActions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UnlikeOwnPostActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UnlikeOwnPostActions_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UnlikeOwnPostActions_WebsiteActions_Id",
+                        name: "FK_UnlikeOwnPostActions_BasePostActions_Id",
                         column: x => x.Id,
-                        principalTable: "WebsiteActions",
+                        principalTable: "BasePostActions",
                         principalColumn: "Id");
                 });
 
@@ -713,22 +1020,47 @@ namespace SdvCode.Web.Migrations
                 name: "UnlikePostActions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UnlikePostActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UnlikePostActions_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UnlikePostActions_WebsiteActions_Id",
+                        name: "FK_UnlikePostActions_BasePostActions_Id",
                         column: x => x.Id,
-                        principalTable: "WebsiteActions",
+                        principalTable: "BasePostActions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostCoverImages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostCoverImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostCoverImages_BasePostImages_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostImages",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostImages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostImages_BasePostImages_Id",
+                        column: x => x.Id,
+                        principalTable: "BasePostImages",
                         principalColumn: "Id");
                 });
 
@@ -748,6 +1080,21 @@ namespace SdvCode.Web.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BasePostActions_PostId",
+                table: "BasePostActions",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BasePostImages_PostId",
+                table: "BasePostImages",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlockedPosts_PostId",
+                table: "BlockedPosts",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BlogCategories_OwnerId",
                 table: "BlogCategories",
                 column: "OwnerId");
@@ -765,6 +1112,11 @@ namespace SdvCode.Web.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BlogComments_PostId",
                 table: "BlogComments",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogPostLikes_PostId",
+                table: "BlogPostLikes",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
@@ -788,6 +1140,16 @@ namespace SdvCode.Web.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChangeProfileCoverImageActions_UserCoverImageId",
+                table: "ChangeProfileCoverImageActions",
+                column: "UserCoverImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChangeProfileImageActions_UserProfileImageId",
+                table: "ChangeProfileImageActions",
+                column: "UserProfileImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cities_CountryId",
                 table: "Cities",
                 column: "CountryId");
@@ -803,28 +1165,18 @@ namespace SdvCode.Web.Migrations
                 column: "CountryCodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CreatedPostActions_PostId",
-                table: "CreatedPostActions",
+                name: "IX_FavoritePosts_PostId",
+                table: "FavoritePosts",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CreatePostActions_PostId",
-                table: "CreatePostActions",
-                column: "PostId");
+                name: "IX_Follows_FolloweeId",
+                table: "Follows",
+                column: "FolloweeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LikedPostActions_PostId",
-                table: "LikedPostActions",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LikeOwnPostActions_PostId",
-                table: "LikeOwnPostActions",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LikePostActions_PostId",
-                table: "LikePostActions",
+                name: "IX_PendingPosts_PostId",
+                table: "PendingPosts",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
@@ -838,21 +1190,6 @@ namespace SdvCode.Web.Migrations
                 name: "IX_States_CountryId",
                 table: "States",
                 column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UnlikedPostActions_PostId",
-                table: "UnlikedPostActions",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UnlikeOwnPostActions_PostId",
-                table: "UnlikeOwnPostActions",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UnlikePostActions_PostId",
-                table: "UnlikePostActions",
-                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -932,16 +1269,55 @@ namespace SdvCode.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BlockedPosts");
+
+            migrationBuilder.DropTable(
                 name: "BlogComments");
 
             migrationBuilder.DropTable(
+                name: "BlogPostLikes");
+
+            migrationBuilder.DropTable(
                 name: "BlogPostsTags");
+
+            migrationBuilder.DropTable(
+                name: "ChangeProfileCoverImageActions");
+
+            migrationBuilder.DropTable(
+                name: "ChangeProfileImageActions");
 
             migrationBuilder.DropTable(
                 name: "CreatedPostActions");
 
             migrationBuilder.DropTable(
                 name: "CreatePostActions");
+
+            migrationBuilder.DropTable(
+                name: "DeletedPostActions");
+
+            migrationBuilder.DropTable(
+                name: "DeleteOwnPostActions");
+
+            migrationBuilder.DropTable(
+                name: "DeletePostActions");
+
+            migrationBuilder.DropTable(
+                name: "EditedPostActions");
+
+            migrationBuilder.DropTable(
+                name: "EditOwnPostActions");
+
+            migrationBuilder.DropTable(
+                name: "EditPersonalDataActions");
+
+            migrationBuilder.DropTable(
+                name: "EditPostActions");
+
+            migrationBuilder.DropTable(
+                name: "FavoritePosts");
+
+            migrationBuilder.DropTable(
+                name: "Follows");
 
             migrationBuilder.DropTable(
                 name: "LikedPostActions");
@@ -953,6 +1329,15 @@ namespace SdvCode.Web.Migrations
                 name: "LikePostActions");
 
             migrationBuilder.DropTable(
+                name: "PendingPosts");
+
+            migrationBuilder.DropTable(
+                name: "PostCoverImages");
+
+            migrationBuilder.DropTable(
+                name: "PostImages");
+
+            migrationBuilder.DropTable(
                 name: "UnlikedPostActions");
 
             migrationBuilder.DropTable(
@@ -962,25 +1347,34 @@ namespace SdvCode.Web.Migrations
                 name: "UnlikePostActions");
 
             migrationBuilder.DropTable(
-                name: "UserProfileImages");
-
-            migrationBuilder.DropTable(
                 name: "UsersRoles");
 
             migrationBuilder.DropTable(
                 name: "BlogTags");
 
             migrationBuilder.DropTable(
-                name: "BlogPosts");
+                name: "UserCoverImages");
 
             migrationBuilder.DropTable(
-                name: "WebsiteActions");
+                name: "UserProfileImages");
+
+            migrationBuilder.DropTable(
+                name: "BasePostImages");
+
+            migrationBuilder.DropTable(
+                name: "BasePostActions");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "WebsiteImages");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "BlogPosts");
+
+            migrationBuilder.DropTable(
+                name: "WebsiteActions");
 
             migrationBuilder.DropTable(
                 name: "BlogCategories");

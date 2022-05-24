@@ -41,6 +41,8 @@ namespace SdvCode.Data
 
         public DbSet<BlogComment> BlogComments { get; set; }
 
+        public DbSet<BlogPostLike> BlogPostLikes { get; set; }
+
         public DbSet<City> Cities { get; set; }
 
         public DbSet<Country> Countries { get; set; }
@@ -133,6 +135,7 @@ namespace SdvCode.Data
             builder.Entity<BlogTag>().ToTable("BlogTags");
             builder.Entity<BlogPostTag>().ToTable("BlogPostsTags");
             builder.Entity<BlogComment>().ToTable("BlogComments");
+            builder.Entity<BlogPostLike>().ToTable("BlogPostLikes");
 
             builder.Entity<LikePostAction>().ToTable("LikePostActions");
             builder.Entity<UnlikePostAction>().ToTable("UnlikePostActions");
@@ -332,6 +335,11 @@ namespace SdvCode.Data
             });
 
             builder.Entity<FavoritePost>(entity =>
+            {
+                entity.HasKey(x => new { x.UserId, x.PostId });
+            });
+
+            builder.Entity<BlogPostLike>(entity =>
             {
                 entity.HasKey(x => new { x.UserId, x.PostId });
             });

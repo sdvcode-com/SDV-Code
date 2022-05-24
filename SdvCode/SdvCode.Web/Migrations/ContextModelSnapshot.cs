@@ -158,6 +158,24 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("BlockedPosts", (string)null);
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Blog.BlogPostLike", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsLiked")
+                        .HasColumnType("bit");
+
+                    b.HasKey("UserId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("BlogPostLikes", (string)null);
+                });
+
             modelBuilder.Entity("SdvCode.Models.Blog.BlogPostTag", b =>
                 {
                     b.Property<string>("PostId")
@@ -892,6 +910,25 @@ namespace SdvCode.Web.Migrations
 
                     b.HasOne("SdvCode.Models.User.User", "User")
                         .WithMany("BlockedPosts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Blog.BlogPostLike", b =>
+                {
+                    b.HasOne("SdvCode.Models.Blog.BlogPost", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
