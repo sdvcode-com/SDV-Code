@@ -110,5 +110,9 @@ namespace SdvCode.Models.User
         public virtual ICollection<WebsiteAction> ReceivedActions { get; set; } = new HashSet<WebsiteAction>();
 
         public virtual ICollection<WebsiteImage> WebsiteImages { get; set; } = new HashSet<WebsiteImage>();
+
+        public virtual ICollection<Follow> Followers { get; set; } = new HashSet<Follow>();
+
+        public virtual ICollection<Follow> Followees { get; set; } = new HashSet<Follow>();
     }
 }

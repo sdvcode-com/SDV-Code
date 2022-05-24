@@ -95,6 +95,8 @@ namespace SdvCode.Data
 
         public DbSet<ChangeProfileImageAction> ChangeProfileImageActions { get; set; }
 
+        public DbSet<Follow> Follows { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -112,6 +114,7 @@ namespace SdvCode.Data
             builder.Entity<User>().ToTable("Users");
             builder.Entity<Role>().ToTable("Roles");
             builder.Entity<UserRole>().ToTable("UsersRoles");
+            builder.Entity<Follow>().ToTable("Follows");
 
             builder.Entity<City>().ToTable("Cities");
             builder.Entity<Country>().ToTable("Countries");
@@ -287,6 +290,23 @@ namespace SdvCode.Data
                 entity.HasOne(x => x.Receiver)
                     .WithMany(x => x.ReceivedActions)
                     .HasForeignKey(x => x.ReceiverId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+            });
+
+            builder.Entity<Follow>(entity =>
+            {
+                entity.HasKey(k => new { k.FollowerId, k.FolloweeId });
+
+                entity.HasOne(u => u.Followee)
+                    .WithMany(u => u.Followers)
+                    .HasForeignKey(u => u.FollowerId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
+
+                entity.HasOne(u => u.Follower)
+                    .WithMany(u => u.Followees)
+                    .HasForeignKey(u => u.FolloweeId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
             });

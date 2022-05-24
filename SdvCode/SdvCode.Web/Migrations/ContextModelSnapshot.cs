@@ -155,6 +155,24 @@ namespace SdvCode.Web.Migrations
                     b.ToTable("BlogPostsTags", (string)null);
                 });
 
+            modelBuilder.Entity("SdvCode.Models.User.Follow", b =>
+                {
+                    b.Property<string>("FollowerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FolloweeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsFollow")
+                        .HasColumnType("bit");
+
+                    b.HasKey("FollowerId", "FolloweeId");
+
+                    b.HasIndex("FolloweeId");
+
+                    b.ToTable("Follows", (string)null);
+                });
+
             modelBuilder.Entity("SdvCode.Models.User.Role", b =>
                 {
                     b.Property<string>("Id")
@@ -829,6 +847,25 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("SdvCode.Models.User.Follow", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.User", "Follower")
+                        .WithMany("Followees")
+                        .HasForeignKey("FolloweeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.User", "Followee")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Followee");
+
+                    b.Navigation("Follower");
+                });
+
             modelBuilder.Entity("SdvCode.Models.User.User", b =>
                 {
                     b.HasOne("SdvCode.Models.UserInformation.City", "City")
@@ -1348,6 +1385,10 @@ namespace SdvCode.Web.Migrations
                     b.Navigation("BlogComments");
 
                     b.Navigation("BlogTags");
+
+                    b.Navigation("Followees");
+
+                    b.Navigation("Followers");
 
                     b.Navigation("Posts");
 
