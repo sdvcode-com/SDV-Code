@@ -95,6 +95,12 @@ namespace SdvCode.Data
 
         public DbSet<ChangeProfileImageAction> ChangeProfileImageActions { get; set; }
 
+        public DbSet<PendingPost> PendingPosts { get; set; }
+
+        public DbSet<BlockedPost> BlockedPosts { get; set; }
+
+        public DbSet<FavoritePost> FavoritePosts { get; set; }
+
         public DbSet<Follow> Follows { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -153,6 +159,10 @@ namespace SdvCode.Data
             builder.Entity<EditPersonalDataAction>().ToTable("EditPersonalDataActions");
             builder.Entity<ChangeProfileCoverImageAction>().ToTable("ChangeProfileCoverImageActions");
             builder.Entity<ChangeProfileImageAction>().ToTable("ChangeProfileImageActions");
+
+            builder.Entity<FavoritePost>().ToTable("FavoritePosts");
+            builder.Entity<PendingPost>().ToTable("PendingPosts");
+            builder.Entity<BlockedPost>().ToTable("BlockedPosts");
 
             builder.Entity<City>(entity =>
             {
@@ -309,6 +319,21 @@ namespace SdvCode.Data
                     .HasForeignKey(u => u.FolloweeId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(true);
+            });
+
+            builder.Entity<BlockedPost>(entity =>
+            {
+                entity.HasKey(x => new { x.UserId, x.PostId });
+            });
+
+            builder.Entity<PendingPost>(entity =>
+            {
+                entity.HasKey(x => new { x.UserId, x.PostId });
+            });
+
+            builder.Entity<FavoritePost>(entity =>
+            {
+                entity.HasKey(x => new { x.UserId, x.PostId });
             });
         }
     }

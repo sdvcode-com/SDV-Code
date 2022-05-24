@@ -114,5 +114,11 @@ namespace SdvCode.Models.User
         public virtual ICollection<Follow> Followers { get; set; } = new HashSet<Follow>();
 
         public virtual ICollection<Follow> Followees { get; set; } = new HashSet<Follow>();
+
+        public virtual ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
+
+        public virtual ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+
+        public virtual ICollection<FavoritePost> FavoritePosts { get; set; } = new HashSet<FavoritePost>();
     }
 }

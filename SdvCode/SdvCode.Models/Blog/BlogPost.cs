@@ -34,5 +34,11 @@ namespace SdvCode.Models.Blog
         public virtual ICollection<BasePostAction> Actions { get; set; } = new HashSet<BasePostAction>();
 
         public virtual ICollection<BasePostImage> Images { get; set; } = new HashSet<BasePostImage>();
+
+        public virtual ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
+
+        public virtual ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+
+        public virtual ICollection<FavoritePost> FavoritePosts { get; set; } = new HashSet<FavoritePost>();
     }
 }
