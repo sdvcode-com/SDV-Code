@@ -87,6 +87,7 @@ namespace SdvCode.Data
 
             builder.Entity<WebsiteAction>().ToTable("WebsiteActions");
             builder.Entity<WebsiteImage>().ToTable("WebsiteImages");
+            builder.Entity<BasePostImage>().ToTable("BasePostImages");
 
             builder.Entity<User>().ToTable("Users");
             builder.Entity<Role>().ToTable("Roles");

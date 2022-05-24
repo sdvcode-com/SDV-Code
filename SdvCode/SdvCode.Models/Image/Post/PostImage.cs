@@ -4,10 +4,15 @@
 
 namespace SdvCode.Models.Image.Post
 {
-    public class PostImage
+    using SdvCode.Models.Enums;
+
+    public class PostImage : BasePostImage
     {
         public PostImage()
         {
+            this.ImageType = WebsiteImageType.PostImage;
+            this.CloudinaryPath = $"/Posts/{this.PostId}_{this.Owner.UserName}/Images/";
+            this.SystemName = $"{this.Owner.UserName}_{this.Id}";
         }
     }
 }
