@@ -10,6 +10,7 @@ namespace SdvCode.Models.Blog
     using SdvCode.Models.Image;
     using SdvCode.Models.Image.Post;
     using SdvCode.Models.User;
+    using SdvCode.Models.WebsiteActions;
     using SdvCode.Models.WebsiteActions.Blog;
     using SdvCode.Models.WebsiteActions.Post;
 
@@ -33,21 +34,7 @@ namespace SdvCode.Models.Blog
 
         public virtual ICollection<BlogComment> Comments { get; set; } = new HashSet<BlogComment>();
 
-        public virtual ICollection<LikePostAction> LikePostActions { get; set; } = new HashSet<LikePostAction>();
-
-        public virtual ICollection<UnlikePostAction> UnlikePostActions { get; set; } = new HashSet<UnlikePostAction>();
-
-        public virtual ICollection<LikeOwnPostAction> LikeOwnPostActions { get; set; } = new HashSet<LikeOwnPostAction>();
-
-        public virtual ICollection<UnlikeOwnPostAction> UnlikeOwnPostActions { get; set; } = new HashSet<UnlikeOwnPostAction>();
-
-        public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
-
-        public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
-
-        public virtual ICollection<CreatePostAction> CreatePostActions { get; set; } = new HashSet<CreatePostAction>();
-
-        public virtual ICollection<CreatedPostAction> CreatedPostActions { get; set; } = new HashSet<CreatedPostAction>();
+        public virtual ICollection<BasePostAction> Actions { get; set; } = new HashSet<BasePostAction>();
 
         public virtual ICollection<BasePostImage> Images { get; set; } = new HashSet<BasePostImage>();
     }

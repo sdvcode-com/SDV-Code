@@ -27,4 +27,8 @@
     <ProjectReference Include="..\SdvCode.ExtensionMethods\SdvCode.ExtensionMethods.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="WebsiteActions\User\" />
+  </ItemGroup>
+
 </Project>

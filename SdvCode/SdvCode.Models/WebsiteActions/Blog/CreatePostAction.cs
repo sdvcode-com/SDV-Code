@@ -10,17 +10,11 @@ namespace SdvCode.Models.WebsiteActions.Blog
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
-    public class CreatePostAction : WebsiteAction
+    public class CreatePostAction : BasePostAction
     {
         public CreatePostAction()
         {
             this.ActionType = WebsiteActionType.CreatePost;
         }
-
-        [Required]
-        [ForeignKey(nameof(BlogPost))]
-        public string PostId { get; set; }
-
-        public BlogPost Post { get; set; }
     }
 }

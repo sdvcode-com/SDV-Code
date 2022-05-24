@@ -10,17 +10,11 @@ namespace SdvCode.Models.WebsiteActions.Post
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
-    public class UnlikeOwnPostAction : WebsiteAction
+    public class UnlikeOwnPostAction : BasePostAction
     {
         public UnlikeOwnPostAction()
         {
             this.ActionType = WebsiteActionType.UnlikeOwnPost;
         }
-
-        [Required]
-        [ForeignKey(nameof(BlogPost))]
-        public string PostId { get; set; }
-
-        public BlogPost Post { get; set; }
     }
 }

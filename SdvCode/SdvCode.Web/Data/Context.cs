@@ -68,6 +68,12 @@ namespace SdvCode.Data
 
         public DbSet<CreatedPostAction> CreatedPostActions { get; set; }
 
+        public DbSet<EditPostAction> EditPostAction { get; set; }
+
+        public DbSet<EditedPostAction> EditedPostActions { get; set; }
+
+        public DbSet<EditOwnPostAction> EditOwnPostAction { get; set; }
+
         public DbSet<UserProfileImage> UserProfileImages { get; set; }
 
         public DbSet<UserCoverImage> UserCoverImages { get; set; }
@@ -88,6 +94,7 @@ namespace SdvCode.Data
             builder.Entity<WebsiteAction>().ToTable("WebsiteActions");
             builder.Entity<WebsiteImage>().ToTable("WebsiteImages");
             builder.Entity<BasePostImage>().ToTable("BasePostImages");
+            builder.Entity<BasePostAction>().ToTable("BasePostActions");
 
             builder.Entity<User>().ToTable("Users");
             builder.Entity<Role>().ToTable("Roles");
@@ -111,8 +118,12 @@ namespace SdvCode.Data
             builder.Entity<UnlikeOwnPostAction>().ToTable("UnlikeOwnPostActions");
             builder.Entity<LikedPostAction>().ToTable("LikedPostActions");
             builder.Entity<UnlikedPostAction>().ToTable("UnlikedPostActions");
+
             builder.Entity<CreatePostAction>().ToTable("CreatePostActions");
             builder.Entity<CreatedPostAction>().ToTable("CreatedPostActions");
+            builder.Entity<EditPostAction>().ToTable("EditPostActions");
+            builder.Entity<EditedPostAction>().ToTable("EditedPostActions");
+            builder.Entity<EditOwnPostAction>().ToTable("EditOwnPostActions");
 
             builder.Entity<UserProfileImage>().ToTable("UserProfileImages");
             builder.Entity<UserCoverImage>().ToTable("UserCoverImages");
