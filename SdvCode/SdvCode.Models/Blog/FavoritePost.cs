@@ -13,6 +13,7 @@ namespace SdvCode.Models.Blog
     using System.Threading.Tasks;
 
     using SdvCode.Models.User;
+    using SdvCode.Models.WebsiteActions.Post;
 
     public class FavoritePost
     {

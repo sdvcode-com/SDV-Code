@@ -70,5 +70,11 @@ namespace SdvCode.Models.Enums
 
         [Display(Name = "Created Post")]
         CreatedPost = 21,
+
+        [Display(Name = "Add Post To Favorite")]
+        AddPostToFavorite = 22,
+
+        [Display(Name = "Added Post To Favorite")]
+        AddedPostToFavorite = 23,
     }
 }

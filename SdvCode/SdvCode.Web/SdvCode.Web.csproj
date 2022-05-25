@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SdvCode.AutoMapper.Profiles\SdvCode.AutoMapper.Profiles.csproj" />
     <ProjectReference Include="..\SdvCode.Models\SdvCode.Models.csproj" />
   </ItemGroup>
 

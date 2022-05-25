@@ -67,6 +67,10 @@ namespace SdvCode.Data
 
         public DbSet<UnlikedPostAction> UnlikedPostActions { get; set; }
 
+        public DbSet<AddPostToFavoriteAction> AddPostToFavoriteActions { get; set; }
+
+        public DbSet<AddedPostToFavoriteAction> AddedPostToFavoriteActions { get; set; }
+
         public DbSet<CreatePostAction> CreatePostActions { get; set; }
 
         public DbSet<CreatedPostAction> CreatedPostActions { get; set; }
@@ -160,6 +164,8 @@ namespace SdvCode.Data
             builder.Entity<DeletePostAction>().ToTable("DeletePostActions");
             builder.Entity<DeletedPostAction>().ToTable("DeletedPostActions");
             builder.Entity<DeleteOwnPostAction>().ToTable("DeleteOwnPostActions");
+            builder.Entity<AddedPostToFavoriteAction>().ToTable("AddedPostToFavoriteActions");
+            builder.Entity<AddPostToFavoriteAction>().ToTable("AddPostToFavoriteActions");
 
             builder.Entity<UserProfileImage>().ToTable("UserProfileImages");
             builder.Entity<UserCoverImage>().ToTable("UserCoverImages");
