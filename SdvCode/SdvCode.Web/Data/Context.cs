@@ -105,6 +105,14 @@ namespace SdvCode.Data
 
         public DbSet<Follow> Follows { get; set; }
 
+        public DbSet<UnfollowedAction> UnfollowedActions { get; set; }
+
+        public DbSet<UnfollowAction> UnfollowActions { get; set; }
+
+        public DbSet<FollowedAction> FollowedActions { get; set; }
+
+        public DbSet<FollowAction> FollowActions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -166,6 +174,11 @@ namespace SdvCode.Data
             builder.Entity<FavoritePost>().ToTable("FavoritePosts");
             builder.Entity<PendingPost>().ToTable("PendingPosts");
             builder.Entity<BlockedPost>().ToTable("BlockedPosts");
+
+            builder.Entity<FollowAction>().ToTable("FollowActions");
+            builder.Entity<FollowedAction>().ToTable("FollowedActions");
+            builder.Entity<UnfollowAction>().ToTable("UnfollowActions");
+            builder.Entity<UnfollowedAction>().ToTable("UnfollowedAction");
 
             builder.Entity<City>(entity =>
             {
