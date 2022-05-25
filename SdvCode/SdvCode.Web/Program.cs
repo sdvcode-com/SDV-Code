@@ -4,7 +4,6 @@
 
 using AutoMapper;
 
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

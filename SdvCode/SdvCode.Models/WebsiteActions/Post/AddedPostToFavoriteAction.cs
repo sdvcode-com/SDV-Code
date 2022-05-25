@@ -4,12 +4,6 @@
 
 namespace SdvCode.Models.WebsiteActions.Post
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using SdvCode.Models.Enums;
 
     public class AddedPostToFavoriteAction : BasePostAction
