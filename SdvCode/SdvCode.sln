@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.ViewModels", "SdvCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Constraints", "SdvCode.Constraints\SdvCode.Constraints.csproj", "{22CB202D-5254-48C8-B58B-14E0BF0CF496}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.ExtensionMethods", "SdvCode.ExtensionMethods\SdvCode.ExtensionMethods.csproj", "{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.ExtensionMethods", "SdvCode.ExtensionMethods\SdvCode.ExtensionMethods.csproj", "{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.AutoMapper.Profiles", "SdvCode.AutoMapper.Profiles\SdvCode.AutoMapper.Profiles.csproj", "{18356BA7-6686-47E7-BD22-8FBD29FC24AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6D9C2DD-6ECF-4B56-AE67-DE3E6D3A380C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18356BA7-6686-47E7-BD22-8FBD29FC24AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18356BA7-6686-47E7-BD22-8FBD29FC24AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18356BA7-6686-47E7-BD22-8FBD29FC24AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18356BA7-6686-47E7-BD22-8FBD29FC24AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

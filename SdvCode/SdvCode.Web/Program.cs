@@ -2,6 +2,8 @@
 // Copyright (c) SDV Code. All rights reserved.
 // </copyright>
 
+using AutoMapper;
+
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,14 @@ builder.Services.AddIdentity<User, Role>((IdentityOptions options) => options.Si
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddRazorPages();
+
+// Setup AutoMapper Profiles Configurations
+builder.Services.AddScoped(provider => new MapperConfiguration(cfg =>
+{
+    // Register Profiles
+}).CreateMapper());
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
